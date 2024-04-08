@@ -9,16 +9,19 @@ export const globalStyles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
+    fontFamily: 'Inter-Bold',
     color: appTheme.colors.black,
     fontSize: 28,
     fontWeight: 'bold',
   },
   subTitle: {
+    fontFamily: 'Inter-Medium',
     color: appTheme.colors.black,
     fontSize: 16,
     fontWeight: '500',
   },
   textBase: {
+    fontFamily: 'Inter-Regular',
     color: appTheme.colors.black,
     fontSize: 12,
   },
