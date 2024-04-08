@@ -3,7 +3,8 @@ import { appTheme } from '../theme';
 
 export const globalStyles = StyleSheet.create({
   container: {
-    flex: 1,
+    paddingVertical: 50,
+    flexGrow: 1,
     backgroundColor: appTheme.colors.white,
     alignItems: 'center',
     justifyContent: 'center',
@@ -42,9 +43,9 @@ export const globalStyles = StyleSheet.create({
     borderRadius: 6,
   },
   errorText: {
-    color: 'red',
+    color: appTheme.colors.error.primary,
   },
   errorInput: {
-    borderColor: 'red',
+    borderColor: appTheme.colors.error.primary,
   },
 });
