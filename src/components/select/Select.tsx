@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { styles } from './styles';
 import { SelectOption } from '../../interfaces';
+import { appTheme } from '../../theme';
 
 interface SelectProps {
   id: string;
@@ -10,6 +11,7 @@ interface SelectProps {
   placeholder?: string;
   value?: string;
   onChange: (id: string, value: string) => void;
+  hasError?: boolean;
 }
 
 export const Select: FC<SelectProps> = ({
@@ -18,13 +20,22 @@ export const Select: FC<SelectProps> = ({
   placeholder = 'Seleccionar',
   value = '',
   onChange,
+  hasError,
 }) => {
   const onSelectValue = (value: string) => {
     onChange(id, value);
   };
 
   return (
-    <View id={id} style={styles.selectContainer}>
+    <View
+      id={id}
+      style={[
+        styles.selectContainer,
+        hasError && {
+          borderColor: appTheme.colors.error.primary,
+        },
+      ]}
+    >
       <RNPickerSelect
         placeholder={{ label: placeholder, value: '' }}
         items={options}

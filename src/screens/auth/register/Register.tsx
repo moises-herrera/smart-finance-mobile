@@ -55,7 +55,7 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
       <View style={styles.form}>
         <FormControl label="Nombre" fieldError={errors?.fullName}>
           <Input
-            id="fullname"
+            id="fullName"
             value={fullName}
             onChange={onInputChange}
             onBlur={onBlur}
@@ -80,6 +80,7 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
             value={country}
             options={countries}
             onChange={onInputChange}
+            hasError={!!errors?.country}
           />
         </FormControl>
 
