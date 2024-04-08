@@ -10,12 +10,12 @@ export const globalStyles = StyleSheet.create({
   },
   title: {
     color: appTheme.colors.black,
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
   },
   subTitle: {
     color: appTheme.colors.black,
-    fontSize: 12,
+    fontSize: 16,
     fontWeight: '500',
   },
   textBase: {
