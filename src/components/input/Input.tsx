@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { KeyboardTypeOptions, TextInput } from 'react-native';
 import { globalStyles } from '../../styles';
 
-interface InputProps {
+export interface InputProps {
   id?: string;
   value?: string;
   placeholder?: string;
