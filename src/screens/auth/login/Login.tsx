@@ -1,9 +1,9 @@
 import { View, Text, ScrollView } from 'react-native';
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { globalStyles } from '../../../styles';
 import { Button, Divider, FormControl, Input } from '../../../components';
 import { appTheme } from '../../../theme';
-import { styles } from './styles';
+import { styles } from '../styles';
 import { useForm } from '../../../hooks';
 import { LoginSchema, LoginSchemaType } from './schemas';
 import { AuthStackParamList, FormSubmitHandler } from '../../../interfaces';
