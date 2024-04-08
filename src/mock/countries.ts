@@ -1,4 +1,4 @@
-import { SelectOption } from '../interfaces';
+import { SelectOption } from 'src/interfaces';
 
 export const countries: SelectOption[] = [
   { label: 'Argentina', value: 'AR' },

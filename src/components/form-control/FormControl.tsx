@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Text, View } from 'react-native';
 import { styles } from './styles';
-import { globalStyles } from '../../styles';
+import { globalStyles } from 'src/styles';
 
 interface FormControlProps {
   label: string;

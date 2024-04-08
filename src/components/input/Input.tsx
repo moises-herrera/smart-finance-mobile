@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { KeyboardTypeOptions, TextInput } from 'react-native';
-import { globalStyles } from '../../styles';
+import { globalStyles } from 'src/styles';
 
 export interface InputProps {
   id?: string;

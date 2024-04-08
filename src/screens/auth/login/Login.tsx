@@ -1,12 +1,12 @@
 import { View, Text, ScrollView } from 'react-native';
 import { FC } from 'react';
-import { globalStyles } from '../../../styles';
-import { Button, Divider, FormControl, Input } from '../../../components';
-import { appTheme } from '../../../theme';
-import { styles } from '../styles';
-import { useForm } from '../../../hooks';
-import { LoginSchema, LoginSchemaType } from './schemas';
-import { AuthStackParamList, FormSubmitHandler } from '../../../interfaces';
+import { globalStyles } from 'src/styles';
+import { Button, Divider, FormControl, Input } from 'src/components';
+import { appTheme } from 'src/theme';
+import { styles } from 'src/screens/auth/styles';
+import { useForm } from 'src/hooks';
+import { LoginSchema, LoginSchemaType } from 'src/screens/auth/login/schemas';
+import { AuthStackParamList, FormSubmitHandler } from 'src/interfaces';
 import { StackScreenProps } from '@react-navigation/stack';
 
 interface LoginProps extends StackScreenProps<AuthStackParamList, 'Login'> {}

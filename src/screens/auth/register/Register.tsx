@@ -1,20 +1,20 @@
 import { View, Text, ScrollView } from 'react-native';
 import { FC } from 'react';
-import { globalStyles } from '../../../styles';
+import { globalStyles } from 'src/styles';
 import {
   Button,
   Divider,
   FormControl,
   Input,
   Select,
-} from '../../../components';
-import { appTheme } from '../../../theme';
-import { styles } from '../styles';
-import { useForm } from '../../../hooks';
-import { AuthStackParamList, FormSubmitHandler } from '../../../interfaces';
+} from 'src/components';
+import { appTheme } from 'src/theme';
+import { styles } from 'src/screens/auth/styles';
+import { useForm } from 'src/hooks';
+import { AuthStackParamList, FormSubmitHandler } from 'src/interfaces';
 import { StackScreenProps } from '@react-navigation/stack';
-import { RegisterSchema, RegisterSchemaType } from './schemas';
-import { countries } from '../../../mock';
+import { RegisterSchema, RegisterSchemaType } from 'src/screens/auth/register/schemas';
+import { countries } from 'src/mock';
 
 interface RegisterProps
   extends StackScreenProps<AuthStackParamList, 'Register'> {}

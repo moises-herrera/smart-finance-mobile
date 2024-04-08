@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { passwordPattern } from '../../../../helpers';
+import { passwordPattern } from 'src/helpers';
 
 /**
  * Register form validation schema.

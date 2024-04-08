@@ -1,12 +1,12 @@
 import { FC, useEffect, useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
-import { AuthStackParamList } from '../../../interfaces';
+import { AuthStackParamList } from 'src/interfaces';
 import { ScrollView, Text, View } from 'react-native';
-import { globalStyles } from '../../../styles';
-import { styles as authStyles } from '../styles';
+import { globalStyles } from 'src/styles';
+import { styles as authStyles } from 'src/screens/auth/styles';
 import { styles } from './styles';
-import { appTheme } from '../../../theme';
-import { CodeInputBox } from '../../../components';
+import { appTheme } from 'src/theme';
+import { CodeInputBox } from 'src/components';
 
 interface RecoveryCodeProps
   extends StackScreenProps<AuthStackParamList, 'RecoveryCode'> {}

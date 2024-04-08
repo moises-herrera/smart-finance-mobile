@@ -1,12 +1,15 @@
 import { FC } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
-import { AuthStackParamList, FormSubmitHandler } from '../../../interfaces';
+import { AuthStackParamList, FormSubmitHandler } from 'src/interfaces';
 import { ScrollView, Text, View } from 'react-native';
-import { globalStyles } from '../../../styles';
-import { styles } from '../styles';
-import { FormControl, Input, Button } from '../../../components';
-import { useForm } from '../../../hooks';
-import { ResetPasswordSchema, ResetPasswordSchemaType } from './schemas';
+import { globalStyles } from 'src/styles';
+import { styles } from 'src/screens/auth/styles';
+import { FormControl, Input, Button } from 'src/components';
+import { useForm } from 'src/hooks';
+import {
+  ResetPasswordSchema,
+  ResetPasswordSchemaType,
+} from 'src/screens/auth/reset-password/schemas';
 
 interface ResetPasswordProps
   extends StackScreenProps<AuthStackParamList, 'ResetPassword'> {}

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ZodType } from 'zod';
-import { getErrorsFormatted } from '../helpers';
-import { FormSubmitHandler, FieldsValidationOptions } from '../interfaces';
+import { getErrorsFormatted } from 'src/helpers';
+import { FormSubmitHandler, FieldsValidationOptions } from 'src/interfaces';
 
 export const useForm = <T>(initialForm: T, schema?: ZodType<any, any, any>) => {
   const [formState, setFormState] = useState<T>(initialForm);

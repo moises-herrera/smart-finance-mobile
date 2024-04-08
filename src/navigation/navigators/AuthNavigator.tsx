@@ -5,8 +5,8 @@ import {
   ForgotPassword,
   RecoveryCode,
   ResetPassword,
-} from '../screens/auth';
-import { AuthStackParamList } from '../interfaces';
+} from 'src/screens/auth';
+import { AuthStackParamList } from 'src/interfaces';
 
 const Stack = createStackNavigator<AuthStackParamList>();
 

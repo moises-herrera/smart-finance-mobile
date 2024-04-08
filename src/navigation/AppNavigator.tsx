@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import { AuthNavigator } from './AuthNavigator';
-import { AppStackParamList } from '../interfaces';
+import { AuthNavigator } from 'src/navigation/navigators';
+import { AppStackParamList } from 'src/interfaces';
 
 const Stack = createStackNavigator<AppStackParamList>();
 

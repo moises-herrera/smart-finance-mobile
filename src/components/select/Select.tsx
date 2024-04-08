@@ -2,8 +2,8 @@ import { FC } from 'react';
 import { View } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { styles } from './styles';
-import { SelectOption } from '../../interfaces';
-import { appTheme } from '../../theme';
+import { SelectOption } from 'src/interfaces';
+import { appTheme } from 'src/theme';
 
 interface SelectProps {
   id: string;
