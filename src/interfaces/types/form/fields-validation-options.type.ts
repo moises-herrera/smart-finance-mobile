@@ -1,4 +1,4 @@
-import { FormSubmitHandler } from '.';
+import { FormSubmitHandler } from '..';
 
 /**
  * Fields validation options.
