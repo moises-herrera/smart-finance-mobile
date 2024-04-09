@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { registerRootComponent } from 'expo';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
-import { ScrollView } from 'react-native';
+import { View } from 'react-native';
 import { AppNavigationContainer } from './navigation';
 
 SplashScreen.preventAutoHideAsync();
@@ -27,9 +27,9 @@ export default function App() {
   }
 
   return (
-    <ScrollView contentContainerStyle={{ flex: 1 }} onLayout={onLayoutRootView}>
+    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <AppNavigationContainer />
-    </ScrollView>
+    </View>
   );
 }
 

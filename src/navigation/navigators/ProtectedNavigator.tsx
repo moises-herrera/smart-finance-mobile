@@ -3,7 +3,7 @@ import { TabParamList } from 'src/interfaces';
 import { Dashboard, Market, Operations, Settings } from 'src/screens/home';
 import { appTheme } from 'src/theme';
 import { MaterialIcons, FontAwesome6 } from '@expo/vector-icons';
-import { ScrollView, Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { APP_NAME } from 'src/constants';
 import { globalStyles } from 'src/styles';
 
@@ -11,8 +11,8 @@ const Tab = createMaterialBottomTabNavigator<TabParamList>();
 
 export const ProtectedNavigator = () => {
   return (
-    <ScrollView
-      contentContainerStyle={{
+    <View
+      style={{
         paddingTop: 30,
         flex: 1,
         backgroundColor: appTheme.colors.lightGray,
@@ -71,6 +71,6 @@ export const ProtectedNavigator = () => {
           }}
         />
       </Tab.Navigator>
-    </ScrollView>
+    </View>
   );
 };
