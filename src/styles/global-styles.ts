@@ -9,6 +9,13 @@ export const globalStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  appName: {
+    fontFamily: 'Inter-Bold',
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: appTheme.colors.primary,
+  },
   title: {
     fontFamily: 'Inter-Bold',
     color: appTheme.colors.black,
