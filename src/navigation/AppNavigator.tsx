@@ -1,5 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import { AuthNavigator } from 'src/navigation/navigators';
+import { AuthNavigator, ProtectedNavigator } from 'src/navigation/navigators';
 import { AppStackParamList } from 'src/interfaces';
 
 const Stack = createStackNavigator<AppStackParamList>();
@@ -11,6 +11,7 @@ export const AppNavigator = () => {
         headerShown: false,
       }}
     >
+      <Stack.Screen name="Home" component={ProtectedNavigator} />
       <Stack.Screen name="Auth" component={AuthNavigator} />
     </Stack.Navigator>
   );
