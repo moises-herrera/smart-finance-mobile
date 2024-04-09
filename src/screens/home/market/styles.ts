@@ -6,10 +6,10 @@ export const styles = StyleSheet.create({
     backgroundColor: appTheme.colors.lightGray,
     height: '100%',
     width: '100%',
-    paddingVertical: 30,
+    paddingTop: 0,
+    paddingBottom: 80,
     paddingHorizontal: 20,
     flexDirection: 'column',
     alignItems: 'center',
-    paddingBottom: 80,
   },
 });
