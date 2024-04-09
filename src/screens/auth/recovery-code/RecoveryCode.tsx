@@ -40,6 +40,8 @@ export const RecoveryCode: FC<RecoveryCodeProps> = ({ navigation }) => {
       contentContainerStyle={[
         globalStyles.container,
         {
+          paddingTop: 150,
+          justifyContent: 'flex-start',
           paddingHorizontal: 35,
         },
       ]}

@@ -32,6 +32,8 @@ export const ForgotPassword: FC<ForgotPasswordProps> = ({ navigation }) => {
       contentContainerStyle={[
         globalStyles.container,
         {
+          paddingTop: 150,
+          justifyContent: 'flex-start',
           paddingHorizontal: 35,
         },
       ]}

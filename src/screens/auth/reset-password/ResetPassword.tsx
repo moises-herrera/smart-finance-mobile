@@ -35,6 +35,8 @@ export const ResetPassword: FC<ResetPasswordProps> = ({ navigation }) => {
       contentContainerStyle={[
         globalStyles.container,
         {
+          paddingTop: 150,
+          justifyContent: 'flex-start',
           paddingHorizontal: 35,
         },
       ]}
