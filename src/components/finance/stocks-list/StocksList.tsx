@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { FlatList, ScrollView, Text, View } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 import { styles } from './styles';
 import { globalStyles } from 'src/styles';
 import { StockListItem } from '../stock-list-item';
@@ -13,7 +13,7 @@ interface StocksListProps {
 
 export const StocksList: FC<StocksListProps> = ({ title, stocks }) => {
   return (
-    <ScrollView style={styles.listContainer}>
+    <View style={styles.listContainer}>
       <Text
         style={[
           globalStyles.title,
@@ -28,7 +28,7 @@ export const StocksList: FC<StocksListProps> = ({ title, stocks }) => {
 
       <View style={styles.list}>
         <FlatList
-          data={stocks.slice(0, 5)}
+          data={stocks}
           keyExtractor={({ symbol }) => symbol}
           renderItem={({ item }) => (
             <>
@@ -38,6 +38,6 @@ export const StocksList: FC<StocksListProps> = ({ title, stocks }) => {
           )}
         />
       </View>
-    </ScrollView>
+    </View>
   );
 };

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { styles } from './styles';
-import { Input, InputProps } from 'src/components';
+import { Input, InputProps } from 'src/components/ui/input';
 
 interface CodeInputBoxProps extends InputProps {}
 

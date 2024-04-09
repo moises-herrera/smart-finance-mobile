@@ -7,7 +7,7 @@ export const Dashboard = () => {
   return (
     <View style={styles.container}>
       <BalanceCard balance={10000} name="John Doe" />
-      <StocksList title="Acciones destacadas" stocks={stocks} />
+      <StocksList title="Acciones destacadas" stocks={stocks.slice(0, 5)} />
     </View>
   );
 };
