@@ -7,7 +7,9 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "ts:check": "tsc"
+    "ts:check": "tsc",
+    "clean": "rimraf build",
+    "build": "npm run clean && npm run ts:check"
   },
   "dependencies": {
     "@react-navigation/material-bottom-tabs": "^6.2.28",
@@ -29,6 +31,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/react": "~18.2.45",
+    "rimraf": "^5.0.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.4"
   },
