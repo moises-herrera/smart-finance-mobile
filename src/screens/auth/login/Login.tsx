@@ -69,6 +69,7 @@ export const Login: FC<LoginProps> = ({ navigation }) => {
             globalStyles.subTitle,
             { textAlign: 'right', color: appTheme.colors.blue },
           ]}
+          onPress={() => navigation.navigate('ForgotPassword')}
         >
           ¿Olvidaste tu contraseña?
         </Text>
