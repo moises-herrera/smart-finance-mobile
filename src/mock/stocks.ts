@@ -21,4 +21,54 @@ export const stocks: Stock[] = [
     symbol: 'META',
     price: 332.88,
   },
+  {
+    label: 'Alphabet Inc.',
+    symbol: 'GOOGL',
+    price: 2728.81,
+  },
+  {
+    label: 'Tesla Inc.',
+    symbol: 'TSLA',
+    price: 709.67,
+  },
+  {
+    label: 'NVIDIA Corporation',
+    symbol: 'NVDA',
+    price: 207.5,
+  },
+  {
+    label: 'PayPal Holdings Inc.',
+    symbol: 'PYPL',
+    price: 283.0,
+  },
+  {
+    label: 'Adobe Inc.',
+    symbol: 'ADBE',
+    price: 630.0,
+  },
+  {
+    label: 'Netflix Inc.',
+    symbol: 'NFLX',
+    price: 513.99,
+  },
+  {
+    label: 'Salesforce.com Inc.',
+    symbol: 'CRM',
+    price: 254.0,
+  },
+  {
+    label: 'Shopify Inc.',
+    symbol: 'SHOP',
+    price: 1545.0,
+  },
+  {
+    label: 'Zoom Video Communications Inc.',
+    symbol: 'ZM',
+    price: 292.0,
+  },
+  {
+    label: 'Spotify Technology S.A.',
+    symbol: 'SPOT',
+    price: 232.0,
+  },
 ];

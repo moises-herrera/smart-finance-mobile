@@ -1,18 +1,19 @@
 import { FC } from 'react';
-import { Text, View } from 'react-native';
+import { FlatList, ScrollView, Text, View } from 'react-native';
 import { styles } from './styles';
 import { globalStyles } from 'src/styles';
-import { stocks } from 'src/mock';
 import { StockListItem } from '../stock-list-item';
 import { Divider } from 'src/components/ui';
+import { Stock } from 'src/interfaces';
 
 interface StocksListProps {
   title: string;
+  stocks: Stock[];
 }
 
-export const StocksList: FC<StocksListProps> = ({ title }) => {
+export const StocksList: FC<StocksListProps> = ({ title, stocks }) => {
   return (
-    <View style={styles.listContainer}>
+    <ScrollView style={styles.listContainer}>
       <Text
         style={[
           globalStyles.title,
@@ -26,13 +27,17 @@ export const StocksList: FC<StocksListProps> = ({ title }) => {
       </Text>
 
       <View style={styles.list}>
-        {stocks.map((stock) => (
-          <>
-            <StockListItem key={stock.symbol} {...stock} />
-            <Divider marginVertical={10} />
-          </>
-        ))}
+        <FlatList
+          data={stocks.slice(0, 5)}
+          keyExtractor={({ symbol }) => symbol}
+          renderItem={({ item }) => (
+            <>
+              <StockListItem {...item} />
+              <Divider marginVertical={10} />
+            </>
+          )}
+        />
       </View>
-    </View>
+    </ScrollView>
   );
 };
