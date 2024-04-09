@@ -7,6 +7,7 @@ export const appTheme = {
     white: '#FFFFFF',
     black: '#000000',
     gray: '#E6E5E7',
+    lightGray: '#FAFAFA',
     darkGray: '#757575',
     blue: '#469FEB',
     error: {
