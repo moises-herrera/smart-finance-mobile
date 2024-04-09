@@ -3,7 +3,9 @@ import { TabParamList } from 'src/interfaces';
 import { Dashboard, Market, Operations, Settings } from 'src/screens/home';
 import { appTheme } from 'src/theme';
 import { MaterialIcons, FontAwesome6 } from '@expo/vector-icons';
-import { ScrollView } from 'react-native';
+import { ScrollView, Text } from 'react-native';
+import { APP_NAME } from 'src/constants';
+import { globalStyles } from 'src/styles';
 
 const Tab = createMaterialBottomTabNavigator<TabParamList>();
 
@@ -13,8 +15,11 @@ export const ProtectedNavigator = () => {
       contentContainerStyle={{
         paddingTop: 30,
         flex: 1,
+        backgroundColor: appTheme.colors.lightGray,
       }}
     >
+      <Text style={globalStyles.appName}>{APP_NAME}</Text>
+
       <Tab.Navigator
         initialRouteName="Dashboard"
         activeColor={appTheme.colors.primary}
