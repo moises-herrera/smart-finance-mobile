@@ -1,10 +1,10 @@
-import { FC } from 'react';
-import { FlatList, Text, View } from 'react-native';
-import { styles } from './styles';
-import { globalStyles } from 'src/styles';
-import { StockListItem } from '../stock-list-item';
-import { Divider } from 'src/components/ui';
-import { Stock } from 'src/interfaces';
+import { FC } from "react";
+import { FlatList, Text, View } from "react-native";
+import { Divider } from "src/components/ui";
+import { Stock } from "src/interfaces";
+import { globalStyles } from "src/styles";
+import { StockListItem } from "../stock-list-item";
+import { styles } from "./styles";
 
 interface StocksListProps {
   title: string;
@@ -19,7 +19,7 @@ export const StocksList: FC<StocksListProps> = ({ title, stocks }) => {
           globalStyles.title,
           {
             fontSize: 18,
-            textAlign: 'left',
+            textAlign: "left",
           },
         ]}
       >
