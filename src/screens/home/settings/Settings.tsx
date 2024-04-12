@@ -8,8 +8,10 @@ import {
   SettingsSchemaType,
 } from 'src/screens/home/settings/schemas';
 import { useForm } from 'src/hooks';
-import { FormSubmitHandler } from 'src/interfaces';
+import { BottomTabNavigationProp, FormSubmitHandler } from 'src/interfaces';
 import { useEffect } from 'react';
+import { appTheme } from 'src/theme';
+import { useNavigation } from '@react-navigation/native';
 
 const initialForm: SettingsSchemaType = {
   fullName: '',
@@ -20,6 +22,7 @@ const initialForm: SettingsSchemaType = {
 };
 
 export const Settings = () => {
+  const navigation = useNavigation<BottomTabNavigationProp>();
   const {
     formState: { fullName, email, country, currency, password },
     onInputChange,
@@ -57,7 +60,7 @@ export const Settings = () => {
         </Text>
       </View>
 
-      <View style={styles.form}>
+      <ScrollView style={styles.form}>
         <FormControl label="Nombre" fieldError={errors?.fullName}>
           <Input
             id="fullName"
@@ -110,10 +113,28 @@ export const Settings = () => {
           />
         </FormControl>
 
-        <View style={{ marginTop: 24 }}>
+        <View style={{ marginTop: 24, flexDirection: 'column', gap: 12 }}>
           <Button label="Guardar" onPress={() => handleSubmit(onSubmit)} />
+          <Button
+            style={{
+              button: {
+                backgroundColor: appTheme.colors.white,
+                borderWidth: 0.5,
+                borderRadius: 6,
+              },
+              buttonText: {
+                color: '#000',
+              },
+            }}
+            label="Cerrar sesión"
+            onPress={() =>
+              navigation.navigate('Auth', {
+                screen: 'Login',
+              })
+            }
+          />
         </View>
-      </View>
+      </ScrollView>
     </ScrollView>
   );
 };

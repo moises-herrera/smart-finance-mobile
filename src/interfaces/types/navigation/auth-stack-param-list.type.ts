@@ -1,3 +1,5 @@
+import { TabParamList } from './tab-param-list.type';
+
 /**
  * Navigation auth routes for the app.
  */
@@ -7,4 +9,7 @@ export type AuthStackParamList = {
   ForgotPassword: undefined;
   RecoveryCode: undefined;
   ResetPassword: undefined;
+  Home: {
+    screen: keyof TabParamList;
+  };
 };

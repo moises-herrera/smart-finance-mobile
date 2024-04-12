@@ -54,6 +54,7 @@ export const useForm = <T>(initialForm: T, schema?: ZodType<any, any, any>) => {
 
   const onResetForm = (): void => {
     setFormState(initialForm);
+    setErrors(null);
   };
 
   const onSetForm = (newForm: T): void => {

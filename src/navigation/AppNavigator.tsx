@@ -11,8 +11,8 @@ export const AppNavigator = () => {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="Home" component={ProtectedNavigator} />
       <Stack.Screen name="Auth" component={AuthNavigator} />
+      <Stack.Screen name="Home" component={ProtectedNavigator} />
     </Stack.Navigator>
   );
 };
