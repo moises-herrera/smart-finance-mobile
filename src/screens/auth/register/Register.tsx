@@ -1,20 +1,17 @@
 import { View, Text, ScrollView } from 'react-native';
 import { FC } from 'react';
 import { globalStyles } from 'src/styles';
-import {
-  Button,
-  Divider,
-  FormControl,
-  Input,
-  Select,
-} from 'src/components';
+import { Button, Divider, FormControl, Input, Select } from 'src/components';
 import { appTheme } from 'src/theme';
 import { styles } from 'src/screens/auth/styles';
 import { useForm } from 'src/hooks';
 import { AuthStackParamList, FormSubmitHandler } from 'src/interfaces';
 import { StackScreenProps } from '@react-navigation/stack';
-import { RegisterSchema, RegisterSchemaType } from 'src/screens/auth/register/schemas';
-import { countries } from 'src/mock';
+import {
+  RegisterSchema,
+  RegisterSchemaType,
+} from 'src/screens/auth/register/schemas';
+import { countries, currencies } from 'src/mock';
 
 interface RegisterProps
   extends StackScreenProps<AuthStackParamList, 'Register'> {}
@@ -23,13 +20,21 @@ const initialForm: RegisterSchemaType = {
   fullName: '',
   email: '',
   country: '',
+  currency: '',
   password: '',
   confirmPassword: '',
 };
 
 export const Register: FC<RegisterProps> = ({ navigation }) => {
   const {
-    formState: { fullName, email, country, password, confirmPassword },
+    formState: {
+      fullName,
+      email,
+      country,
+      currency,
+      password,
+      confirmPassword,
+    },
     onInputChange,
     onBlur,
     handleSubmit,
@@ -81,6 +86,16 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
             options={countries}
             onChange={onInputChange}
             hasError={!!errors?.country}
+          />
+        </FormControl>
+
+        <FormControl label="Moneda" fieldError={errors?.currency}>
+          <Select
+            id="currency"
+            value={currency}
+            options={currencies}
+            onChange={onInputChange}
+            hasError={!!errors?.currency}
           />
         </FormControl>
 
