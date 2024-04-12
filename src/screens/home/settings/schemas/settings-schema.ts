@@ -11,6 +11,7 @@ export const SettingsSchema = z.object({
     .min(1, 'El correo es requerido')
     .email('El correo no es valido'),
   country: z.string().min(1, 'El país es requerido'),
+  currency: z.string().min(1, 'La moneda es requerida'),
   password: z
     .string()
     .min(8, 'La contraseña debe tener mínimo 8 carácteres')
