@@ -1,13 +1,10 @@
 import { FC, useState } from 'react';
 import { View, Pressable } from 'react-native';
-import { Dialog, FormControl, Input, Select } from 'src/components/ui';
-import { formatCurrency } from 'src/helpers';
-import { OperationInfo, SelectOption } from 'src/interfaces';
-import { styles } from './styles';
-import { brokers } from 'src/mock';
+import { Dialog } from 'src/components/ui';
+import { OperationInfo } from 'src/interfaces';
 import { AntDesign } from '@expo/vector-icons';
-import { StartOperation } from '../start-operation';
-import { CompleteOperation } from '../complete-operation';
+import { StartOperation } from 'src/components/finance/start-operation';
+import { CompleteOperation } from 'src/components/finance/complete-operation';
 
 interface StockDialogProps {
   isOpen: boolean;

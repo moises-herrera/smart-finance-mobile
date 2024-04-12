@@ -29,28 +29,33 @@ export const Button: FC<ButtonProps> = ({
   isLoading = false,
   style,
 }) => {
+  const componentStyle = {
+    button: [styles.button, style?.button],
+    buttonText: {
+      ...styles.buttonText,
+      ...style?.buttonText,
+    },
+    disabled: [styles.disabled, style?.disabled],
+  };
   const buttonRef = useRef<View | null>(null);
+  const isDisabled = disabled || isLoading;
 
   const onPressIn = () => {
     buttonRef.current?.setNativeProps({
-      style: [styles.button, styles.disabled],
+      style: [componentStyle.button, componentStyle.disabled],
     });
   };
 
   const onPressOut = () => {
     buttonRef.current?.setNativeProps({
-      style: [styles.button, (disabled || isLoading) && styles.disabled],
+      style: [componentStyle.button, isDisabled && componentStyle.disabled],
     });
   };
 
   return (
     <Pressable
       ref={buttonRef}
-      style={[
-        styles.button,
-        (disabled || isLoading) && styles.disabled,
-        style?.button,
-      ]}
+      style={[componentStyle.button, isDisabled && componentStyle.disabled]}
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
@@ -60,10 +65,10 @@ export const Button: FC<ButtonProps> = ({
         {isLoading && (
           <ActivityIndicator
             size="small"
-            color={style?.buttonText?.color ?? styles.buttonText.color}
+            color={componentStyle.buttonText?.color}
           />
         )}
-        <Text style={[styles.buttonText, style?.buttonText]}>{label}</Text>
+        <Text style={[componentStyle.buttonText]}>{label}</Text>
       </View>
     </Pressable>
   );
