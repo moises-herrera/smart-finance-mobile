@@ -2,7 +2,7 @@ import { ScrollView, Text, View } from 'react-native';
 import { styles } from './styles';
 import { globalStyles } from 'src/styles';
 import { Button, FormControl, Input, Select } from 'src/components';
-import { countries } from 'src/mock';
+import { countries, currencies } from 'src/mock';
 import {
   SettingsSchema,
   SettingsSchemaType,
@@ -15,12 +15,13 @@ const initialForm: SettingsSchemaType = {
   fullName: '',
   email: '',
   country: '',
+  currency: '',
   password: '',
 };
 
 export const Settings = () => {
   const {
-    formState: { fullName, email, country, password },
+    formState: { fullName, email, country, currency, password },
     onInputChange,
     onBlur,
     handleSubmit,
@@ -35,6 +36,7 @@ export const Settings = () => {
       fullName: 'John Doe',
       email: 'john@email.com',
       country: 'CO',
+      currency: 'COP',
       password: '',
     });
   }, []);
@@ -84,6 +86,16 @@ export const Settings = () => {
             options={countries}
             onChange={onInputChange}
             hasError={!!errors?.country}
+          />
+        </FormControl>
+
+        <FormControl label="Moneda" fieldError={errors?.currency}>
+          <Select
+            id="currency"
+            value={currency}
+            options={currencies}
+            onChange={onInputChange}
+            hasError={!!errors?.currency}
           />
         </FormControl>
 
