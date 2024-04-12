@@ -16,7 +16,7 @@ const brokerOptions: SelectOption[] = brokers.map(({ id, name }) => ({
 
 const initialForm: OperationSchemaType = {
   broker: '',
-  amount: '',
+  amount: 0,
 };
 
 export const CompleteOperation = () => {
