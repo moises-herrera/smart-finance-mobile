@@ -9,7 +9,8 @@
     "web": "expo start --web",
     "ts:check": "tsc",
     "clean": "rimraf build",
-    "build": "npm run clean && npm run ts:check"
+    "build": "npm run clean && npm run ts:check",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@react-navigation/material-bottom-tabs": "^6.2.28",
@@ -33,7 +34,8 @@
     "@types/react": "~18.2.78",
     "rimraf": "^5.0.5",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "husky": "^8.0.0"
   },
   "private": true
 }
