@@ -4,11 +4,11 @@ import { globalStyles } from 'src/styles';
 import { Button, Divider, FormControl, Input } from 'src/components';
 import { appTheme } from 'src/theme';
 import { styles } from 'src/screens/auth/styles';
-import { useForm } from 'src/hooks';
+import { useAppDispatch, useForm } from 'src/hooks';
 import { LoginSchema, LoginSchemaType } from 'src/screens/auth/login/schemas';
 import { AuthStackParamList, FormSubmitHandler } from 'src/interfaces';
 import { StackScreenProps } from '@react-navigation/stack';
-import { users } from 'src/mock';
+import { loginUser } from 'src/redux/auth';
 
 interface LoginProps extends StackScreenProps<AuthStackParamList, 'Login'> {}
 
@@ -18,27 +18,17 @@ const initialForm: LoginSchemaType = {
 };
 
 export const Login: FC<LoginProps> = ({ navigation }) => {
+  const dispatch = useAppDispatch();
   const {
     formState: { email, password },
     onInputChange,
     onBlur,
     handleSubmit,
     errors,
-    onResetForm,
   } = useForm<LoginSchemaType>(initialForm, LoginSchema);
 
-  const onSubmit: FormSubmitHandler<LoginSchemaType> = (data) => {
-    const userExists = users.some(
-      ({ email, password }) =>
-        email === data.email && password === data.password
-    );
-
-    if (userExists) {
-      navigation.navigate('Home', {
-        screen: 'Dashboard',
-      });
-      onResetForm();
-    }
+  const onSubmit: FormSubmitHandler<LoginSchemaType> = async (data) => {
+    dispatch(loginUser(data));
   };
 
   return (
