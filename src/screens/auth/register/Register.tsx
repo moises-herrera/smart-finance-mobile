@@ -4,7 +4,7 @@ import { globalStyles } from 'src/styles';
 import { Button, Divider, FormControl, Input, Select } from 'src/components';
 import { appTheme } from 'src/theme';
 import { styles } from 'src/screens/auth/styles';
-import { useForm } from 'src/hooks';
+import { useAppDispatch, useForm } from 'src/hooks';
 import { AuthStackParamList, FormSubmitHandler } from 'src/interfaces';
 import { StackScreenProps } from '@react-navigation/stack';
 import {
@@ -12,6 +12,7 @@ import {
   RegisterSchemaType,
 } from 'src/screens/auth/register/schemas';
 import { countries, currencies } from 'src/mock';
+import { registerUser } from 'src/redux/auth';
 
 interface RegisterProps
   extends StackScreenProps<AuthStackParamList, 'Register'> {}
@@ -26,6 +27,7 @@ const initialForm: RegisterSchemaType = {
 };
 
 export const Register: FC<RegisterProps> = ({ navigation }) => {
+  const dispatch = useAppDispatch();
   const {
     formState: {
       fullName,
@@ -41,7 +43,9 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
     errors,
   } = useForm<RegisterSchemaType>(initialForm, RegisterSchema);
 
-  const onSubmit: FormSubmitHandler<RegisterSchemaType> = () => {};
+  const onSubmit: FormSubmitHandler<RegisterSchemaType> = async (data) => {
+    dispatch(registerUser(data));
+  };
 
   return (
     <ScrollView
