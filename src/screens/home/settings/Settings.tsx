@@ -7,11 +7,12 @@ import {
   SettingsSchema,
   SettingsSchemaType,
 } from 'src/screens/home/settings/schemas';
-import { useForm } from 'src/hooks';
-import { BottomTabNavigationProp, FormSubmitHandler } from 'src/interfaces';
+import { useAppDispatch, useForm } from 'src/hooks';
+import { FormSubmitHandler } from 'src/interfaces';
 import { useEffect } from 'react';
 import { appTheme } from 'src/theme';
-import { useNavigation } from '@react-navigation/native';
+import { onLogout } from 'src/redux/auth';
+import { removeToken } from 'src/helpers';
 
 const initialForm: SettingsSchemaType = {
   fullName: '',
@@ -22,7 +23,7 @@ const initialForm: SettingsSchemaType = {
 };
 
 export const Settings = () => {
-  const navigation = useNavigation<BottomTabNavigationProp>();
+  const dispatch = useAppDispatch();
   const {
     formState: { fullName, email, country, currency, password },
     onInputChange,
@@ -43,6 +44,11 @@ export const Settings = () => {
       password: '',
     });
   }, []);
+
+  const logout = () => {
+    removeToken();
+    dispatch(onLogout(null));
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -127,11 +133,7 @@ export const Settings = () => {
               },
             }}
             label="Cerrar sesión"
-            onPress={() =>
-              navigation.navigate('Auth', {
-                screen: 'Login',
-              })
-            }
+            onPress={logout}
           />
         </View>
       </ScrollView>
