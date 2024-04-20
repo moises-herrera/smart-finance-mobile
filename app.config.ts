@@ -27,6 +27,9 @@ const config: ExpoConfig = {
     favicon: './src/assets/images/favicon.png',
   },
   plugins: ['expo-font'],
+  extra: {
+    API_URL: process.env.API_URL,
+  }
 };
 
 export default config;
