@@ -11,6 +11,9 @@ export interface OTPState {
   /** The email to verify. */
   email: string;
 
+  /** The temporal token. */
+  token: string | null;
+
   /** Loading status. */
   isLoading: boolean;
 

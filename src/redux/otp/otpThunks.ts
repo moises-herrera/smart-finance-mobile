@@ -35,18 +35,21 @@ export const sendOTP = createAsyncThunk<string, string, AsyncThunkConfig>(
   }
 );
 
+/**
+ * Verify the OTP.
+ */
 export const verifyOTP = createAsyncThunk<
-  StandardResponse,
+  string,
   { email: string; otp: string; verificationKey: string },
   AsyncThunkConfig
 >('verifyOTP', async (body, { rejectWithValue }) => {
   try {
-    const { data } = await smartFinanceApi.post<StandardResponse>(
-      '/otp/verify',
-      body
-    );
+    const { data } = await smartFinanceApi.post<
+      StandardResponse<{ token: string }>
+    >('/otp/verify', body);
 
-    return data;
+    console.log({ data });
+    return data.data?.token || '';
   } catch (error) {
     const message =
       error instanceof AxiosError

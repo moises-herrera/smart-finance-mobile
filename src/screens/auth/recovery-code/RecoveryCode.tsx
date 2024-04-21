@@ -33,9 +33,12 @@ export const RecoveryCode: FC<RecoveryCodeProps> = ({ navigation }) => {
         verificationKey: otpState.verificationKey,
       };
 
-      dispatch(verifyOTP(verificationData)).then(() => {
-        navigation.navigate('ResetPassword');
-      });
+      dispatch(verifyOTP(verificationData))
+        .unwrap()
+        .then((data) => {
+          console.log(data);
+          navigation.navigate('ResetPassword');
+        });
     }
   }, [code]);
 

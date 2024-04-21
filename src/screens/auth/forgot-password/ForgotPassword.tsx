@@ -11,7 +11,7 @@ import {
   ForgotPasswordSchemaType,
 } from 'src/screens/auth/forgot-password/schemas';
 import { displayToast } from 'src/redux/ui';
-import { sendOTP } from 'src/redux/otp';
+import { sendOTP, setEmail } from 'src/redux/otp';
 
 interface ForgotPasswordProps
   extends StackScreenProps<AuthStackParamList, 'ForgotPassword'> {}
@@ -40,12 +40,13 @@ export const ForgotPassword: FC<ForgotPasswordProps> = ({ navigation }) => {
     }
   }, [errorMessage]);
 
-  const onSubmit: FormSubmitHandler<ForgotPasswordSchemaType> = (
-    data
-  ) => {
-    dispatch(sendOTP(data.email)).then(() => {
-      navigation.navigate('RecoveryCode');
-    });
+  const onSubmit: FormSubmitHandler<ForgotPasswordSchemaType> = (data) => {
+    dispatch(setEmail(email));
+    dispatch(sendOTP(data.email))
+      .unwrap()
+      .then(() => {
+        navigation.navigate('RecoveryCode');
+      });
   };
 
   return (

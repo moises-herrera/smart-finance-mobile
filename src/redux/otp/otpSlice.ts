@@ -8,6 +8,7 @@ const initialState: OTPState = {
   verificationKey: '',
   isLoading: false,
   errorMessage: '',
+  token: null,
 };
 
 export const otpSlice = createSlice({
@@ -16,6 +17,9 @@ export const otpSlice = createSlice({
   reducers: {
     setEmail: (state, { payload }: PayloadAction<string>) => {
       state.email = payload;
+    },
+    clearToken: (state) => {
+      state.token = null;
     },
   },
   extraReducers: (builder) => {
@@ -36,9 +40,10 @@ export const otpSlice = createSlice({
       state.isLoading = true;
       state.errorMessage = '';
     });
-    builder.addCase(verifyOTP.fulfilled, (state) => {
+    builder.addCase(verifyOTP.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.verificationKey = '';
+      state.token = payload;
     });
     builder.addCase(verifyOTP.rejected, (state, { payload }) => {
       state.isLoading = false;
@@ -49,4 +54,4 @@ export const otpSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setEmail } = otpSlice.actions;
+export const { setEmail, clearToken } = otpSlice.actions;
