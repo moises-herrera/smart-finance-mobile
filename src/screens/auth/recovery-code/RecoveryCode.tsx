@@ -6,35 +6,45 @@ import { globalStyles } from 'src/styles';
 import { styles as authStyles } from 'src/screens/auth/styles';
 import { styles } from './styles';
 import { appTheme } from 'src/theme';
-import { CodeInputBox } from 'src/components';
+import { Input } from 'src/components';
+import { useAppDispatch, useAppSelector } from 'src/hooks';
+import { verifyOTP } from 'src/redux/otp';
+import { displayToast } from 'src/redux/ui';
 
 interface RecoveryCodeProps
   extends StackScreenProps<AuthStackParamList, 'RecoveryCode'> {}
 
 export const RecoveryCode: FC<RecoveryCodeProps> = ({ navigation }) => {
-  const [code, setCode] = useState<{
-    code1: string;
-    code2: string;
-    code3: string;
-    code4: string;
-  }>({
-    code1: '',
-    code2: '',
-    code3: '',
-    code4: '',
-  });
+  const dispatch = useAppDispatch();
+  const otpState = useAppSelector(({ otp }) => otp);
+  const [code, setCode] = useState<string>('');
 
-  const onChangeCode = (id: string, value: string) => {
-    setCode((prev) => ({ ...prev, [id]: value }));
+  const onChangeCode = (_: string, value: string) => {
+    setCode(value);
   };
 
   useEffect(() => {
-    const isCodeSubmitted = !Object.values(code).some((value) => !value.trim());
+    const isCodeSubmitted = code.length === 6;
 
     if (isCodeSubmitted) {
-      navigation.navigate('ResetPassword');
+      const verificationData = {
+        email: otpState.email,
+        otp: code,
+        verificationKey: otpState.verificationKey,
+      };
+
+      dispatch(verifyOTP(verificationData)).then(() => {
+        navigation.navigate('ResetPassword');
+      });
     }
   }, [code]);
+
+  useEffect(() => {
+    if (otpState.errorMessage) {
+      dispatch(displayToast({ message: otpState.errorMessage, type: 'error' }));
+    }
+  }, [otpState.errorMessage]);
+
   return (
     <ScrollView
       contentContainerStyle={[
@@ -54,10 +64,12 @@ export const RecoveryCode: FC<RecoveryCodeProps> = ({ navigation }) => {
       </View>
 
       <View style={styles.codeContainer}>
-        <CodeInputBox id="code1" value={code.code1} onChange={onChangeCode} />
-        <CodeInputBox id="code2" value={code.code2} onChange={onChangeCode} />
-        <CodeInputBox id="code3" value={code.code3} onChange={onChangeCode} />
-        <CodeInputBox id="code4" value={code.code4} onChange={onChangeCode} />
+        <Input
+          id="code"
+          type="number-pad"
+          value={code}
+          onChange={onChangeCode}
+        />
       </View>
 
       <Text

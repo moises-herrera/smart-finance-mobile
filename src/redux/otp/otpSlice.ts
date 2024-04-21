@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { OTPState } from 'src/redux/interfaces';
-import { sendOTP } from './otpThunks';
+import { sendOTP, verifyOTP } from './otpThunks';
 
 const initialState: OTPState = {
   email: '',
@@ -29,6 +29,20 @@ export const otpSlice = createSlice({
     });
     builder.addCase(sendOTP.rejected, (state, { payload }) => {
       state.isLoading = false;
+      state.errorMessage = payload?.message;
+    });
+
+    builder.addCase(verifyOTP.pending, (state) => {
+      state.isLoading = true;
+      state.errorMessage = '';
+    });
+    builder.addCase(verifyOTP.fulfilled, (state) => {
+      state.isLoading = false;
+      state.verificationKey = '';
+    });
+    builder.addCase(verifyOTP.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.verificationKey = '';
       state.errorMessage = payload?.message;
     });
   },
