@@ -48,7 +48,6 @@ export const verifyOTP = createAsyncThunk<
       StandardResponse<{ token: string }>
     >('/otp/verify', body);
 
-    console.log({ data });
     return data.data?.token || '';
   } catch (error) {
     const message =

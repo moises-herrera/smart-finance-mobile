@@ -35,8 +35,7 @@ export const RecoveryCode: FC<RecoveryCodeProps> = ({ navigation }) => {
 
       dispatch(verifyOTP(verificationData))
         .unwrap()
-        .then((data) => {
-          console.log(data);
+        .then(() => {
           navigation.navigate('ResetPassword');
         });
     }

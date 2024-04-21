@@ -39,7 +39,7 @@ export const ResetPassword: FC<ResetPasswordProps> = ({ navigation }) => {
     try {
       setIsLoading(true);
       await axios.post(
-        `${expoExtraConfig?.API_URL}/api/user/reset-password`,
+        `${expoExtraConfig?.API_URL}/user/reset-password`,
         {
           password: data.password,
         },
@@ -55,7 +55,6 @@ export const ResetPassword: FC<ResetPasswordProps> = ({ navigation }) => {
       );
       navigation.navigate('Login');
     } catch (error) {
-      console.log(error);
       setIsLoading(false);
       dispatch(
         displayToast({ message: 'Ha ocurrido un error', type: 'error' })
