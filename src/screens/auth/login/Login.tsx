@@ -1,14 +1,15 @@
 import { View, Text, ScrollView } from 'react-native';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { globalStyles } from 'src/styles';
 import { Button, Divider, FormControl, Input } from 'src/components';
 import { appTheme } from 'src/theme';
 import { styles } from 'src/screens/auth/styles';
-import { useForm } from 'src/hooks';
+import { useAppDispatch, useAppSelector, useForm } from 'src/hooks';
 import { LoginSchema, LoginSchemaType } from 'src/screens/auth/login/schemas';
 import { AuthStackParamList, FormSubmitHandler } from 'src/interfaces';
 import { StackScreenProps } from '@react-navigation/stack';
-import { users } from 'src/mock';
+import { clearErrorMessage, loginUser } from 'src/redux/auth';
+import { displayToast } from 'src/redux/ui';
 
 interface LoginProps extends StackScreenProps<AuthStackParamList, 'Login'> {}
 
@@ -18,27 +19,30 @@ const initialForm: LoginSchemaType = {
 };
 
 export const Login: FC<LoginProps> = ({ navigation }) => {
+  const dispatch = useAppDispatch();
+  const errorMessage = useAppSelector(
+    ({ auth: { errorMessage } }) => errorMessage
+  );
+  const isLoading = useAppSelector(
+    ({ auth: { status } }) => status === 'loading'
+  );
   const {
     formState: { email, password },
     onInputChange,
     onBlur,
     handleSubmit,
     errors,
-    onResetForm,
   } = useForm<LoginSchemaType>(initialForm, LoginSchema);
 
-  const onSubmit: FormSubmitHandler<LoginSchemaType> = (data) => {
-    const userExists = users.some(
-      ({ email, password }) =>
-        email === data.email && password === data.password
-    );
-
-    if (userExists) {
-      navigation.navigate('Home', {
-        screen: 'Dashboard',
-      });
-      onResetForm();
+  useEffect(() => {
+    if (errorMessage) {
+      dispatch(displayToast({ message: errorMessage, type: 'error' }));
+      dispatch(clearErrorMessage());
     }
+  }, [errorMessage]);
+
+  const onSubmit: FormSubmitHandler<LoginSchemaType> = (data) => {
+    dispatch(loginUser(data));
   };
 
   return (
@@ -89,7 +93,11 @@ export const Login: FC<LoginProps> = ({ navigation }) => {
         </Text>
       </View>
 
-      <Button label="Log In" onPress={() => handleSubmit(onSubmit)} />
+      <Button
+        label="Log In"
+        onPress={() => handleSubmit(onSubmit)}
+        isLoading={isLoading}
+      />
 
       <Divider />
 

@@ -1,17 +1,31 @@
 import { View, Text, ScrollView } from 'react-native';
-import { FC } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { globalStyles } from 'src/styles';
-import { Button, Divider, FormControl, Input, Select } from 'src/components';
+import {
+  Button,
+  Divider,
+  FormControl,
+  Input,
+  Loading,
+  Select,
+} from 'src/components';
 import { appTheme } from 'src/theme';
 import { styles } from 'src/screens/auth/styles';
-import { useForm } from 'src/hooks';
-import { AuthStackParamList, FormSubmitHandler } from 'src/interfaces';
+import { useAppDispatch, useAppSelector, useForm } from 'src/hooks';
+import {
+  AuthStackParamList,
+  FormSubmitHandler,
+  ICountry,
+  SelectOption,
+} from 'src/interfaces';
 import { StackScreenProps } from '@react-navigation/stack';
 import {
   RegisterSchema,
   RegisterSchemaType,
 } from 'src/screens/auth/register/schemas';
-import { countries, currencies } from 'src/mock';
+import { clearErrorMessage, registerUser } from 'src/redux/auth';
+import { smartFinanceApi } from 'src/api';
+import { displayToast } from 'src/redux/ui';
 
 interface RegisterProps
   extends StackScreenProps<AuthStackParamList, 'Register'> {}
@@ -21,17 +35,26 @@ const initialForm: RegisterSchemaType = {
   email: '',
   country: '',
   currency: '',
+  balance: 0,
   password: '',
   confirmPassword: '',
 };
 
 export const Register: FC<RegisterProps> = ({ navigation }) => {
+  const dispatch = useAppDispatch();
+  const errorMessage = useAppSelector(
+    ({ auth: { errorMessage } }) => errorMessage
+  );
+  const isLoading = useAppSelector(
+    ({ auth: { status } }) => status === 'loading'
+  );
   const {
     formState: {
       fullName,
       email,
       country,
       currency,
+      balance,
       password,
       confirmPassword,
     },
@@ -40,8 +63,57 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
     handleSubmit,
     errors,
   } = useForm<RegisterSchemaType>(initialForm, RegisterSchema);
+  const [countries, setCountries] = useState<ICountry[]>([]);
+  const [areCountriesLoading, setAreCountriesLoading] = useState<boolean>(true);
+  const countriesOptions = useMemo<SelectOption[]>(
+    () =>
+      countries.map<SelectOption>((country) => ({
+        label: country.name,
+        value: country._id,
+      })),
+    [countries]
+  );
+  const [currenciesOptions, setCurrenciesOptions] = useState<SelectOption[]>(
+    []
+  );
 
-  const onSubmit: FormSubmitHandler<RegisterSchemaType> = () => {};
+  const getCountries = async () => {
+    setAreCountriesLoading(true);
+    const { data } = await smartFinanceApi.get<ICountry[]>('/country');
+    setCountries(data);
+    setAreCountriesLoading(false);
+  };
+
+  useEffect(() => {
+    getCountries();
+  }, []);
+
+  useEffect(() => {
+    if (country) {
+      const currencies = countries.find(({ _id }) => _id === country);
+      const options =
+        currencies?.currencies.map<SelectOption>((currency) => ({
+          label: currency.name,
+          value: currency._id,
+        })) || [];
+      setCurrenciesOptions(options);
+    }
+  }, [country]);
+
+  useEffect(() => {
+    if (errorMessage) {
+      dispatch(displayToast({ message: errorMessage, type: 'error' }));
+      dispatch(clearErrorMessage());
+    }
+  }, [errorMessage]);
+
+  if (areCountriesLoading) {
+    return <Loading />;
+  }
+
+  const onSubmit: FormSubmitHandler<RegisterSchemaType> = (data) => {
+    dispatch(registerUser(data));
+  };
 
   return (
     <ScrollView
@@ -83,7 +155,7 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
           <Select
             id="country"
             value={country}
-            options={countries}
+            options={countriesOptions}
             onChange={onInputChange}
             hasError={!!errors?.country}
           />
@@ -93,9 +165,21 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
           <Select
             id="currency"
             value={currency}
-            options={currencies}
+            options={currenciesOptions}
             onChange={onInputChange}
             hasError={!!errors?.currency}
+            disabled={!country}
+          />
+        </FormControl>
+
+        <FormControl label="Saldo" fieldError={errors?.balance}>
+          <Input
+            id="balance"
+            type="number-pad"
+            value={balance.toString()}
+            onChange={(id, value) => onInputChange(id, Number(value))}
+            onBlur={onBlur}
+            hasError={!!errors?.balance}
           />
         </FormControl>
 
@@ -125,7 +209,11 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
         </FormControl>
       </View>
 
-      <Button label="Registrarse" onPress={() => handleSubmit(onSubmit)} />
+      <Button
+        label="Registrarse"
+        onPress={() => handleSubmit(onSubmit)}
+        isLoading={isLoading}
+      />
 
       <Divider />
 

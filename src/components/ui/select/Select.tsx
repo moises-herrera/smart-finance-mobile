@@ -1,9 +1,9 @@
-import { FC } from "react";
-import { View } from "react-native";
-import RNPickerSelect from "react-native-picker-select";
-import { SelectOption } from "src/interfaces";
-import { appTheme } from "src/theme";
-import { styles } from "./styles";
+import { FC } from 'react';
+import { View } from 'react-native';
+import RNPickerSelect from 'react-native-picker-select';
+import { SelectOption } from 'src/interfaces';
+import { appTheme } from 'src/theme';
+import { styles } from './styles';
 
 interface SelectProps {
   id: string;
@@ -12,16 +12,18 @@ interface SelectProps {
   value?: string;
   onChange: (id: string, value: string) => void;
   hasError?: boolean;
-  style?: View["props"]["style"];
+  disabled?: boolean;
+  style?: View['props']['style'];
 }
 
 export const Select: FC<SelectProps> = ({
   id,
   options,
-  placeholder = "Seleccionar",
-  value = "",
+  placeholder = 'Seleccionar',
+  value = '',
   onChange,
   hasError,
+  disabled = false,
   style = {},
 }) => {
   const onSelectValue = (value: string) => {
@@ -37,13 +39,17 @@ export const Select: FC<SelectProps> = ({
         hasError && {
           borderColor: appTheme.colors.error.primary,
         },
+        disabled && {
+          opacity: 0.6,
+        },
       ]}
     >
       <RNPickerSelect
-        placeholder={{ label: placeholder, value: "" }}
+        placeholder={{ label: placeholder, value: '' }}
         items={options}
         onValueChange={onSelectValue}
         value={value}
+        disabled={disabled}
       />
     </View>
   );

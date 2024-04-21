@@ -3,7 +3,7 @@
  */
 export interface User {
   /** User id. */
-  id: string;
+  _id: string;
 
   /** User full name. */
   fullName: string;
@@ -13,6 +13,12 @@ export interface User {
 
   /** User country. */
   country: string;
+
+  /** User currency. */
+  currency: string;
+
+  /** User balance. */
+  balance: number;
 
   /** User currency. */
   password: string;

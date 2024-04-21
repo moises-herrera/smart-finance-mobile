@@ -31,13 +31,17 @@ export const Input: FC<InputProps> = ({
   numberOfLines,
   hasError = false,
 }) => {
+  const onChangeText = (value: string) => {
+    onChange(id, value);
+  };
+
   return (
     <TextInput
       id={id}
       nativeID={id}
       value={value}
       placeholder={placeholder}
-      onChangeText={(value) => onChange(id, value)}
+      onChangeText={onChangeText}
       onBlur={() => onBlur && onBlur(id)}
       keyboardType={type}
       secureTextEntry={secureTextEntry}

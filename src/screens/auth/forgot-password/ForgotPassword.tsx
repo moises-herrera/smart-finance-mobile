@@ -1,15 +1,17 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { AuthStackParamList, FormSubmitHandler } from 'src/interfaces';
 import { ScrollView, Text, View } from 'react-native';
 import { globalStyles } from 'src/styles';
 import { styles } from 'src/screens/auth/styles';
 import { FormControl, Input, Button } from 'src/components';
-import { useForm } from 'src/hooks';
+import { useAppDispatch, useAppSelector, useForm } from 'src/hooks';
 import {
   ForgotPasswordSchema,
   ForgotPasswordSchemaType,
 } from 'src/screens/auth/forgot-password/schemas';
+import { displayToast } from 'src/redux/ui';
+import { sendOTP, setEmail } from 'src/redux/otp';
 
 interface ForgotPasswordProps
   extends StackScreenProps<AuthStackParamList, 'ForgotPassword'> {}
@@ -17,6 +19,11 @@ interface ForgotPasswordProps
 const initialForm: ForgotPasswordSchemaType = { email: '' };
 
 export const ForgotPassword: FC<ForgotPasswordProps> = ({ navigation }) => {
+  const dispatch = useAppDispatch();
+  const errorMessage = useAppSelector(
+    ({ otp: { errorMessage } }) => errorMessage
+  );
+  const isLoading = useAppSelector(({ otp: { isLoading } }) => isLoading);
   const {
     formState: { email },
     onBlur,
@@ -25,7 +32,22 @@ export const ForgotPassword: FC<ForgotPasswordProps> = ({ navigation }) => {
     errors,
   } = useForm<ForgotPasswordSchemaType>(initialForm, ForgotPasswordSchema);
 
-  const onSubmit: FormSubmitHandler<ForgotPasswordSchemaType> = () => {};
+  useEffect(() => {
+    if (errorMessage) {
+      dispatch(
+        displayToast({ message: 'Ha ocurrido un error', type: 'error' })
+      );
+    }
+  }, [errorMessage]);
+
+  const onSubmit: FormSubmitHandler<ForgotPasswordSchemaType> = (data) => {
+    dispatch(setEmail(email));
+    dispatch(sendOTP(data.email))
+      .unwrap()
+      .then(() => {
+        navigation.navigate('RecoveryCode');
+      });
+  };
 
   return (
     <ScrollView
@@ -60,7 +82,8 @@ export const ForgotPassword: FC<ForgotPasswordProps> = ({ navigation }) => {
 
       <Button
         label="Enviar"
-        onPress={() => navigation.navigate('RecoveryCode')}
+        onPress={() => handleSubmit(onSubmit)}
+        isLoading={isLoading}
       />
     </ScrollView>
   );

@@ -5,6 +5,8 @@ node_modules/
 
 build/
 
+.env
+
 # Expo
 .expo/
 dist/
