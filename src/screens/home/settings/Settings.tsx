@@ -45,8 +45,8 @@ export const Settings = () => {
     });
   }, []);
 
-  const logout = () => {
-    removeToken();
+  const logout = async () => {
+    await removeToken();
     dispatch(onLogout(null));
   };
 

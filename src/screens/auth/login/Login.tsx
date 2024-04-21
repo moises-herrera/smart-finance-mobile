@@ -1,14 +1,15 @@
 import { View, Text, ScrollView } from 'react-native';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { globalStyles } from 'src/styles';
 import { Button, Divider, FormControl, Input } from 'src/components';
 import { appTheme } from 'src/theme';
 import { styles } from 'src/screens/auth/styles';
-import { useAppDispatch, useForm } from 'src/hooks';
+import { useAppDispatch, useAppSelector, useForm } from 'src/hooks';
 import { LoginSchema, LoginSchemaType } from 'src/screens/auth/login/schemas';
 import { AuthStackParamList, FormSubmitHandler } from 'src/interfaces';
 import { StackScreenProps } from '@react-navigation/stack';
-import { loginUser } from 'src/redux/auth';
+import { clearErrorMessage, loginUser } from 'src/redux/auth';
+import { displayToast } from 'src/redux/ui';
 
 interface LoginProps extends StackScreenProps<AuthStackParamList, 'Login'> {}
 
@@ -19,6 +20,9 @@ const initialForm: LoginSchemaType = {
 
 export const Login: FC<LoginProps> = ({ navigation }) => {
   const dispatch = useAppDispatch();
+  const errorMessage = useAppSelector(
+    ({ auth: { errorMessage } }) => errorMessage
+  );
   const {
     formState: { email, password },
     onInputChange,
@@ -26,6 +30,13 @@ export const Login: FC<LoginProps> = ({ navigation }) => {
     handleSubmit,
     errors,
   } = useForm<LoginSchemaType>(initialForm, LoginSchema);
+
+  useEffect(() => {
+    if (errorMessage) {
+      dispatch(displayToast({ message: errorMessage, type: 'error' }));
+      dispatch(clearErrorMessage());
+    }
+  }, [errorMessage]);
 
   const onSubmit: FormSubmitHandler<LoginSchemaType> = async (data) => {
     dispatch(loginUser(data));
