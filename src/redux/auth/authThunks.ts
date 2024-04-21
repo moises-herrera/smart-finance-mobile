@@ -22,7 +22,7 @@ export const registerUser = createAsyncThunk<
       user
     );
 
-    setToken(data.accessToken);
+    await setToken(data.accessToken);
 
     return data.user;
   } catch (error) {
@@ -52,7 +52,7 @@ export const loginUser = createAsyncThunk<User, UserAuth, AsyncThunkConfig>(
         user
       );
 
-      setToken(data.accessToken);
+      await setToken(data.accessToken);
 
       return data.user;
     } catch (error) {
@@ -78,7 +78,7 @@ export const validateAccessToken = createAsyncThunk<
   void,
   AsyncThunkConfig
 >('renewToken', async (_, { rejectWithValue }) => {
-  const token = getToken();
+  const token = await getToken();
 
   if (!token) {
     return rejectWithValue({
@@ -91,7 +91,7 @@ export const validateAccessToken = createAsyncThunk<
       '/auth/renew-token'
     );
 
-    setToken(data.accessToken);
+    await setToken(data.accessToken);
 
     return data.user;
   } catch (error) {

@@ -20,6 +20,9 @@ export const authSlice = createSlice({
       state.user = null;
       state.errorMessage = payload;
     },
+    clearErrorMessage: (state) => {
+      state.errorMessage = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(registerUser.pending, (state) => {
@@ -73,4 +76,4 @@ export const authSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { onLogout } = authSlice.actions;
+export const { onLogout, clearErrorMessage } = authSlice.actions;
