@@ -23,6 +23,9 @@ export const Login: FC<LoginProps> = ({ navigation }) => {
   const errorMessage = useAppSelector(
     ({ auth: { errorMessage } }) => errorMessage
   );
+  const isLoading = useAppSelector(
+    ({ auth: { status } }) => status === 'loading'
+  );
   const {
     formState: { email, password },
     onInputChange,
@@ -90,7 +93,11 @@ export const Login: FC<LoginProps> = ({ navigation }) => {
         </Text>
       </View>
 
-      <Button label="Log In" onPress={() => handleSubmit(onSubmit)} />
+      <Button
+        label="Log In"
+        onPress={() => handleSubmit(onSubmit)}
+        isLoading={isLoading}
+      />
 
       <Divider />
 

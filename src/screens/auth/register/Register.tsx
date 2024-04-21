@@ -45,6 +45,9 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
   const errorMessage = useAppSelector(
     ({ auth: { errorMessage } }) => errorMessage
   );
+  const isLoading = useAppSelector(
+    ({ auth: { status } }) => status === 'loading'
+  );
   const {
     formState: {
       fullName,
@@ -206,7 +209,11 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
         </FormControl>
       </View>
 
-      <Button label="Registrarse" onPress={() => handleSubmit(onSubmit)} />
+      <Button
+        label="Registrarse"
+        onPress={() => handleSubmit(onSubmit)}
+        isLoading={isLoading}
+      />
 
       <Divider />
 
