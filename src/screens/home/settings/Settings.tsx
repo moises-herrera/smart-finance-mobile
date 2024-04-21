@@ -9,7 +9,6 @@ import {
 } from 'src/screens/home/settings/schemas';
 import { useAppDispatch, useForm } from 'src/hooks';
 import { FormSubmitHandler } from 'src/interfaces';
-import { useEffect } from 'react';
 import { appTheme } from 'src/theme';
 import { onLogout } from 'src/redux/auth';
 import { removeToken } from 'src/helpers';
@@ -19,31 +18,21 @@ const initialForm: SettingsSchemaType = {
   email: '',
   country: '',
   currency: '',
+  balance: 0,
   password: '',
 };
 
 export const Settings = () => {
   const dispatch = useAppDispatch();
   const {
-    formState: { fullName, email, country, currency, password },
+    formState: { fullName, email, country, currency, balance, password },
     onInputChange,
     onBlur,
     handleSubmit,
-    onSetForm,
     errors,
   } = useForm<SettingsSchemaType>(initialForm, SettingsSchema);
 
   const onSubmit: FormSubmitHandler<SettingsSchemaType> = () => {};
-
-  useEffect(() => {
-    onSetForm({
-      fullName: 'John Doe',
-      email: 'john@email.com',
-      country: 'CO',
-      currency: 'COP',
-      password: '',
-    });
-  }, []);
 
   const logout = async () => {
     await removeToken();
@@ -105,6 +94,18 @@ export const Settings = () => {
             options={currencies}
             onChange={onInputChange}
             hasError={!!errors?.currency}
+            disabled={!country}
+          />
+        </FormControl>
+
+        <FormControl label="Saldo" fieldError={errors?.balance}>
+          <Input
+            id="balance"
+            type="number-pad"
+            value={balance.toString()}
+            onChange={(id, value) => onInputChange(id, Number(value))}
+            onBlur={onBlur}
+            hasError={!!errors?.balance}
           />
         </FormControl>
 
@@ -119,7 +120,7 @@ export const Settings = () => {
           />
         </FormControl>
 
-        <View style={{ marginTop: 24, flexDirection: 'column', gap: 12 }}>
+        <View style={{ height: 150, marginTop: 24, flexDirection: 'column', gap: 12 }}>
           <Button label="Guardar" onPress={() => handleSubmit(onSubmit)} />
           <Button
             style={{

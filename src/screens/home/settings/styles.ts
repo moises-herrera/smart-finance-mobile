@@ -13,6 +13,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   form: {
+    flexDirection: 'column',
     width: '100%',
     marginTop: 10,
     backgroundColor: appTheme.colors.white,
