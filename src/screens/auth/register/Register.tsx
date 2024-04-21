@@ -108,7 +108,7 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
     return <Loading />;
   }
 
-  const onSubmit: FormSubmitHandler<RegisterSchemaType> = async (data) => {
+  const onSubmit: FormSubmitHandler<RegisterSchemaType> = (data) => {
     dispatch(registerUser(data));
   };
 
@@ -174,7 +174,7 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
             id="balance"
             type="number-pad"
             value={balance.toString()}
-            onChange={onInputChange}
+            onChange={(id, value) => onInputChange(id, Number(value))}
             onBlur={onBlur}
             hasError={!!errors?.balance}
           />

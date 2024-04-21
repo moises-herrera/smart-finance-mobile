@@ -38,7 +38,7 @@ export const Login: FC<LoginProps> = ({ navigation }) => {
     }
   }, [errorMessage]);
 
-  const onSubmit: FormSubmitHandler<LoginSchemaType> = async (data) => {
+  const onSubmit: FormSubmitHandler<LoginSchemaType> = (data) => {
     dispatch(loginUser(data));
   };
 
