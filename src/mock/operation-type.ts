@@ -1,12 +1,13 @@
 import { SelectOption } from 'src/interfaces';
+import { OperationType } from 'src/interfaces/enums';
 
-export const operationType: SelectOption[] = [
+export const operationTypes: SelectOption[] = [
   {
-    value: 'operation-type-1',
+    value: OperationType.Purchase,
     label: 'Compra',
   },
   {
-    value: 'operation-type-2',
+    value: OperationType.Sale,
     label: 'Venta',
   },
 ];
