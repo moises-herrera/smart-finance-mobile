@@ -3,7 +3,7 @@
  */
 export interface Stock {
   /** Stock id. */
-  id: string;
+  _id: string;
 
   /** Stock's label. */
   label: string;
@@ -11,6 +11,6 @@ export interface Stock {
   /** Stock's symbol. */
   symbol: string;
 
-  /** Stock's price. */
+  /** Stock current price in USD. */
   price: number;
 }
