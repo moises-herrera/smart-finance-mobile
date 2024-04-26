@@ -1,12 +1,11 @@
 import { FC, useMemo, useState } from 'react';
-import { FlatList, Pressable, Text, View } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 import { StockListItem } from 'src/components/finance/stock-list-item';
 import { Divider, Select } from 'src/components/ui';
-import { Operation, OperationInfo, Stock, OperationType } from 'src/interfaces';
+import { Operation, OperationType } from 'src/interfaces';
 import { operationTypes } from 'src/mock';
 import { globalStyles } from 'src/styles';
 import { styles } from './styles';
-import { StockDialog } from 'src/components/finance/stock-dialog';
 
 interface OperationsListProps {
   title: string;
@@ -25,23 +24,6 @@ export const OperationsList: FC<OperationsListProps> = ({
 
   const onSelectType = (value: OperationType) => {
     setOperationTypeSelected(value);
-  };
-
-  const [operationInfo, setOperationInfo] = useState<OperationInfo>();
-  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
-
-  const onStockPress = (stock: Stock): void => {
-    setIsDialogOpen(true);
-    setOperationInfo({
-      label: stock.label,
-      symbol: stock.symbol,
-      quantity: stock.price,
-      isBuy: false,
-    });
-  };
-
-  const onCloseDialog = () => {
-    setIsDialogOpen(false);
   };
 
   return (
@@ -81,14 +63,7 @@ export const OperationsList: FC<OperationsListProps> = ({
           data={operationsSelectedList}
           keyExtractor={({ _id }) => _id}
           renderItem={({ item: { quantity, stock, createdAt } }) => (
-            <Pressable
-              onPress={() =>
-                onStockPress({
-                  ...stock,
-                  price: quantity,
-                })
-              }
-            >
+            <>
               <StockListItem
                 {...{
                   ...stock,
@@ -99,18 +74,10 @@ export const OperationsList: FC<OperationsListProps> = ({
                 {new Date(createdAt).toLocaleDateString()}
               </Text>
               <Divider marginVertical={10} />
-            </Pressable>
+            </>
           )}
         />
       </View>
-
-      {operationInfo && (
-        <StockDialog
-          isOpen={isDialogOpen}
-          onClose={onCloseDialog}
-          operationInfo={operationInfo}
-        />
-      )}
     </View>
   );
 };
