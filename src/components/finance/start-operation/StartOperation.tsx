@@ -11,7 +11,7 @@ interface OperationInfoProps {
 }
 
 export const StartOperation: FC<OperationInfoProps> = ({
-  operationInfo: { label, symbol, amount, isBuy },
+  operationInfo: { label, symbol, quantity: amount, isBuy },
   onStartOperation,
 }) => {
   const buttonLabel = isBuy ? 'Comprar' : 'Vender';

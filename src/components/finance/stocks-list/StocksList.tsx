@@ -22,7 +22,7 @@ export const StocksList: FC<StocksListProps> = ({ title, stocks }) => {
     setOperationInfo({
       label: stock.label,
       symbol: stock.symbol,
-      amount: stock.price,
+      quantity: stock.price,
       isBuy: true,
     });
   };

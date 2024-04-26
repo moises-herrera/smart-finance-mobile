@@ -1,12 +1,12 @@
 import { FC, useMemo, useState } from 'react';
 import { FlatList, Pressable, Text, View } from 'react-native';
-import { StockListItem } from 'src/components/finance/stock-list-item/StockListItem';
+import { StockListItem } from 'src/components/finance/stock-list-item';
 import { Divider, Select } from 'src/components/ui';
-import { Operation, OperationInfo, Stock } from 'src/interfaces';
-import { operationType } from 'src/mock';
+import { Operation, OperationInfo, Stock, OperationType } from 'src/interfaces';
+import { operationTypes } from 'src/mock';
 import { globalStyles } from 'src/styles';
 import { styles } from './styles';
-import { StockDialog } from '../stock-dialog';
+import { StockDialog } from 'src/components/finance/stock-dialog';
 
 interface OperationsListProps {
   title: string;
@@ -17,14 +17,13 @@ export const OperationsList: FC<OperationsListProps> = ({
   title,
   operations,
 }) => {
-  const [operationTypeSelected, setOperationTypeSelected] = useState<string>(
-    operationType[0].value
-  );
+  const [operationTypeSelected, setOperationTypeSelected] =
+    useState<OperationType>(OperationType.Purchase);
   const operationsSelectedList = useMemo(() => {
-    return operations.filter(({ typeId }) => typeId === operationTypeSelected);
+    return operations.filter(({ type }) => type === operationTypeSelected);
   }, [operationTypeSelected]);
 
-  const onSelectType = (value: string) => {
+  const onSelectType = (value: OperationType) => {
     setOperationTypeSelected(value);
   };
 
@@ -36,7 +35,7 @@ export const OperationsList: FC<OperationsListProps> = ({
     setOperationInfo({
       label: stock.label,
       symbol: stock.symbol,
-      amount: stock.price,
+      quantity: stock.price,
       isBuy: false,
     });
   };
@@ -68,9 +67,9 @@ export const OperationsList: FC<OperationsListProps> = ({
 
         <Select
           id="type"
-          options={operationType}
-          value={operationType[0].value}
-          onChange={(_, value) => onSelectType(value)}
+          options={operationTypes}
+          value={OperationType.Purchase}
+          onChange={(_, value) => onSelectType(value as OperationType)}
           style={{
             width: 150,
           }}
@@ -80,7 +79,7 @@ export const OperationsList: FC<OperationsListProps> = ({
       <View style={styles.list}>
         <FlatList
           data={operationsSelectedList}
-          keyExtractor={({ id }) => id}
+          keyExtractor={({ _id }) => _id}
           renderItem={({ item: { quantity, stock, createdAt } }) => (
             <Pressable
               onPress={() =>
