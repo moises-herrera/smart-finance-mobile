@@ -9,7 +9,7 @@ export interface OperationInfo {
   symbol: string;
 
   /** Operation amount. */
-  amount: number;
+  quantity: number;
 
   /** Whether the operation is a buy. */
   isBuy: boolean;

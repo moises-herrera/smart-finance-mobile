@@ -1,9 +1,9 @@
-import { ICurrency } from './currency.interface';
+import { Currency } from './currency.interface';
 
 /**
  * Represents the country interface.
  */
-export interface ICountry {
+export interface Country {
   /** Country id. */
   _id: string;
 
@@ -14,5 +14,5 @@ export interface ICountry {
   name: string;
 
   /** Country currencies. */
-  currencies: ICurrency[];
+  currencies: Currency[];
 }

@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector, useForm } from 'src/hooks';
 import {
   AuthStackParamList,
   FormSubmitHandler,
-  ICountry,
+  Country,
   SelectOption,
 } from 'src/interfaces';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -63,7 +63,7 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
     handleSubmit,
     errors,
   } = useForm<RegisterSchemaType>(initialForm, RegisterSchema);
-  const [countries, setCountries] = useState<ICountry[]>([]);
+  const [countries, setCountries] = useState<Country[]>([]);
   const [areCountriesLoading, setAreCountriesLoading] = useState<boolean>(true);
   const countriesOptions = useMemo<SelectOption[]>(
     () =>
@@ -79,7 +79,7 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
 
   const getCountries = async () => {
     setAreCountriesLoading(true);
-    const { data } = await smartFinanceApi.get<ICountry[]>('/country');
+    const { data } = await smartFinanceApi.get<Country[]>('/country');
     setCountries(data);
     setAreCountriesLoading(false);
   };

@@ -1,7 +1,7 @@
 /**
  * Represents a currency.
  */
-export interface ICurrency {
+export interface Currency {
   /** Currency id. */
   _id: string;
 
