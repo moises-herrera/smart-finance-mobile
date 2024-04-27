@@ -39,7 +39,11 @@ export const Dashboard = () => {
     <View style={styles.container}>
       <BalanceCard balance={balance} name={userFullName as string} />
       {!isLoading ? (
-        <StocksList title="Acciones adquiridas" stocks={stocksList} />
+        <StocksList
+          title="Acciones adquiridas"
+          stocks={stocksList}
+          isBuy={false}
+        />
       ) : (
         <View style={{ marginTop: 30 }}>
           <Loading />

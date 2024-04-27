@@ -11,9 +11,14 @@ import { OperationInfo } from 'src/interfaces';
 interface StocksListProps {
   title: string;
   stocks: Stock[];
+  isBuy?: boolean;
 }
 
-export const StocksList: FC<StocksListProps> = ({ title, stocks }) => {
+export const StocksList: FC<StocksListProps> = ({
+  title,
+  stocks,
+  isBuy = true,
+}) => {
   const [operationInfo, setOperationInfo] = useState<OperationInfo>();
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
@@ -23,7 +28,7 @@ export const StocksList: FC<StocksListProps> = ({ title, stocks }) => {
       label: stock.label,
       symbol: stock.symbol,
       quantity: stock.price,
-      isBuy: true,
+      isBuy,
     });
   };
 
