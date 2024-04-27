@@ -9,8 +9,8 @@ import {
 import { View } from 'react-native';
 import { styles } from './styles';
 
-const brokerOptions: SelectOption[] = brokers.map(({ id, name }) => ({
-  value: id,
+const brokerOptions: SelectOption[] = brokers.map(({ _id, name }) => ({
+  value: _id,
   label: name,
 }));
 
