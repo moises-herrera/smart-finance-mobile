@@ -46,7 +46,7 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
     ({ auth: { errorMessage } }) => errorMessage
   );
   const isLoading = useAppSelector(
-    ({ auth: { status } }) => status === 'loading'
+    ({ auth: { authStatus: status } }) => status === 'loading'
   );
   const {
     formState: {

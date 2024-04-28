@@ -10,7 +10,7 @@ const Stack = createStackNavigator<AppStackParamList>();
 
 export const AppNavigator = () => {
   const dispatch = useAppDispatch();
-  const status = useAppSelector(({ auth }) => auth.status);
+  const status = useAppSelector(({ auth }) => auth.authStatus);
 
   useEffect(() => {
     dispatch(validateAccessToken());

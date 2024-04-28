@@ -8,8 +8,14 @@ export interface AuthState {
   user: User | null;
 
   /** Status of the authentication. */
-  status: 'loading' | 'authenticated' | 'not-authenticated';
+  authStatus: 'loading' | 'authenticated' | 'not-authenticated';
 
   /** Error message. */
   errorMessage?: string | null;
+
+  /** If the user info is loading. */
+  isLoadingUserInfo: boolean;
+
+  /** User info error message. */
+  userInfoErrorMessage?: string | null;
 }

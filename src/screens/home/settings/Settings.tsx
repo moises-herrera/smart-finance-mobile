@@ -1,17 +1,27 @@
 import { ScrollView, Text, View } from 'react-native';
 import { styles } from './styles';
 import { globalStyles } from 'src/styles';
-import { Button, FormControl, Input, Select } from 'src/components';
-import { countries, currencies } from 'src/mock';
+import { Button, FormControl, Input, Loading, Select } from 'src/components';
 import {
   SettingsSchema,
   SettingsSchemaType,
 } from 'src/screens/home/settings/schemas';
-import { useAppDispatch, useForm } from 'src/hooks';
-import { FormSubmitHandler } from 'src/interfaces';
+import { useAppDispatch, useAppSelector, useForm } from 'src/hooks';
+import {
+  Country,
+  Currency,
+  FormSubmitHandler,
+  SelectOption,
+  User,
+  UserInfo,
+} from 'src/interfaces';
 import { appTheme } from 'src/theme';
-import { onLogout } from 'src/redux/auth';
+import { clearUserInfoErrorMessage, onLogout } from 'src/redux/auth';
 import { removeToken } from 'src/helpers';
+import { updateUser } from 'src/redux/auth/userThunks';
+import { useEffect, useMemo, useState } from 'react';
+import { displayToast } from 'src/redux/ui';
+import { smartFinanceApi } from 'src/api';
 
 const initialForm: SettingsSchemaType = {
   fullName: '',
@@ -24,20 +34,77 @@ const initialForm: SettingsSchemaType = {
 
 export const Settings = () => {
   const dispatch = useAppDispatch();
+  const user = useAppSelector(({ auth }) => auth.user);
+  const isLoading = useAppSelector(
+    ({ auth: { isLoadingUserInfo } }) => isLoadingUserInfo
+  );
+  const userInfoErrorMessage = useAppSelector(
+    ({ auth: { userInfoErrorMessage } }) => userInfoErrorMessage
+  );
   const {
     formState: { fullName, email, country, currency, balance, password },
     onInputChange,
     onBlur,
     handleSubmit,
     errors,
-  } = useForm<SettingsSchemaType>(initialForm, SettingsSchema);
+  } = useForm<SettingsSchemaType>(user ?? initialForm, SettingsSchema);
 
-  const onSubmit: FormSubmitHandler<SettingsSchemaType> = () => {};
+  const onSubmit: FormSubmitHandler<SettingsSchemaType> = (data) => {
+    dispatch(updateUser({ id: user?._id as string, userData: data }));
+  };
+
+  useEffect(() => {
+    if (userInfoErrorMessage) {
+      dispatch(displayToast({ message: userInfoErrorMessage, type: 'error' }));
+      dispatch(clearUserInfoErrorMessage());
+    }
+  }, [userInfoErrorMessage]);
+
+  const [countries, setCountries] = useState<Country[]>([]);
+  const [areCountriesLoading, setAreCountriesLoading] = useState<boolean>(true);
+  const countriesOptions = useMemo<SelectOption[]>(
+    () =>
+      countries.map<SelectOption>((country) => ({
+        label: country.name,
+        value: country._id,
+      })),
+    [countries]
+  );
+  const [currenciesOptions, setCurrenciesOptions] = useState<SelectOption[]>(
+    []
+  );
+
+  const getCountries = async () => {
+    setAreCountriesLoading(true);
+    const { data } = await smartFinanceApi.get<Country[]>('/country');
+    setCountries(data);
+    setAreCountriesLoading(false);
+  };
+
+  useEffect(() => {
+    getCountries();
+  }, []);
+
+  useEffect(() => {
+    if (country) {
+      const currencies = countries.find(({ _id }) => _id === country);
+      const options =
+        currencies?.currencies.map<SelectOption>((currency) => ({
+          label: currency.name,
+          value: currency._id,
+        })) || [];
+      setCurrenciesOptions(options);
+    }
+  }, [country]);
 
   const logout = async () => {
     await removeToken();
     dispatch(onLogout(null));
   };
+
+  if (areCountriesLoading) {
+    return <Loading />;
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -81,7 +148,7 @@ export const Settings = () => {
           <Select
             id="country"
             value={country}
-            options={countries}
+            options={countriesOptions}
             onChange={onInputChange}
             hasError={!!errors?.country}
           />
@@ -91,7 +158,7 @@ export const Settings = () => {
           <Select
             id="currency"
             value={currency}
-            options={currencies}
+            options={currenciesOptions}
             onChange={onInputChange}
             hasError={!!errors?.currency}
             disabled={!country}
@@ -120,8 +187,19 @@ export const Settings = () => {
           />
         </FormControl>
 
-        <View style={{ height: 150, marginTop: 24, flexDirection: 'column', gap: 12 }}>
-          <Button label="Guardar" onPress={() => handleSubmit(onSubmit)} />
+        <View
+          style={{
+            height: 150,
+            marginTop: 24,
+            flexDirection: 'column',
+            gap: 12,
+          }}
+        >
+          <Button
+            label="Guardar"
+            onPress={() => handleSubmit(onSubmit)}
+            isLoading={isLoading}
+          />
           <Button
             style={{
               button: {
