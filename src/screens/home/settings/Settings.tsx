@@ -7,14 +7,7 @@ import {
   SettingsSchemaType,
 } from 'src/screens/home/settings/schemas';
 import { useAppDispatch, useAppSelector, useForm } from 'src/hooks';
-import {
-  Country,
-  Currency,
-  FormSubmitHandler,
-  SelectOption,
-  User,
-  UserInfo,
-} from 'src/interfaces';
+import { Country, FormSubmitHandler, SelectOption } from 'src/interfaces';
 import { appTheme } from 'src/theme';
 import { clearUserInfoErrorMessage, onLogout } from 'src/redux/auth';
 import { removeToken } from 'src/helpers';
