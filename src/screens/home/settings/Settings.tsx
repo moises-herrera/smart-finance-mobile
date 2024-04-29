@@ -63,9 +63,19 @@ export const Settings = () => {
       })),
     [countries]
   );
-  const [currenciesOptions, setCurrenciesOptions] = useState<SelectOption[]>(
-    []
-  );
+  const currenciesOptions = useMemo<
+    SelectOption[]
+  >(() => {
+    if (!country) return [];
+
+    const currencies = countries.find(({ _id }) => _id === country);
+    const options =
+      currencies?.currencies.map<SelectOption>((currency) => ({
+        label: currency.name,
+        value: currency._id,
+      })) || [];
+    return options;
+  }, [country, countries]);
 
   const getCountries = async () => {
     setAreCountriesLoading(true);
@@ -77,18 +87,6 @@ export const Settings = () => {
   useEffect(() => {
     getCountries();
   }, []);
-
-  useEffect(() => {
-    if (country) {
-      const currencies = countries.find(({ _id }) => _id === country);
-      const options =
-        currencies?.currencies.map<SelectOption>((currency) => ({
-          label: currency.name,
-          value: currency._id,
-        })) || [];
-      setCurrenciesOptions(options);
-    }
-  }, [country]);
 
   const logout = async () => {
     await removeToken();
