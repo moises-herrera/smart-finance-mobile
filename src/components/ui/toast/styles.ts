@@ -7,7 +7,7 @@ const colors = appTheme.colors;
 export const baseStyles = StyleSheet.create({
   mainContainer: {
     width: '100%',
-    bottom: StatusBar.currentHeight || 0,
+    bottom: 500,
     left: 0,
     right: 0,
     justifyContent: 'center',

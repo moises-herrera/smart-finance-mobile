@@ -43,7 +43,13 @@ export const Settings = () => {
   } = useForm<SettingsSchemaType>(user ?? initialForm, SettingsSchema);
 
   const onSubmit: FormSubmitHandler<SettingsSchemaType> = (data) => {
-    dispatch(updateUser({ id: user?._id as string, userData: data }));
+    dispatch(updateUser({ id: user?._id as string, userData: data }))
+      .unwrap()
+      .then(() => {
+        dispatch(
+          displayToast({ message: 'Datos actualizados', type: 'success' })
+        );
+      });
   };
 
   useEffect(() => {
@@ -63,9 +69,7 @@ export const Settings = () => {
       })),
     [countries]
   );
-  const currenciesOptions = useMemo<
-    SelectOption[]
-  >(() => {
+  const currenciesOptions = useMemo<SelectOption[]>(() => {
     if (!country) return [];
 
     const currencies = countries.find(({ _id }) => _id === country);
