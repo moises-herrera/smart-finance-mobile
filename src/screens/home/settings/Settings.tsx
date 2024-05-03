@@ -9,9 +9,12 @@ import {
 import { useAppDispatch, useAppSelector, useForm } from 'src/hooks';
 import { Country, FormSubmitHandler, SelectOption } from 'src/interfaces';
 import { appTheme } from 'src/theme';
-import { clearUserInfoErrorMessage, onLogout } from 'src/redux/auth';
+import {
+  clearUserInfoErrorMessage,
+  onLogout,
+  updateUser,
+} from 'src/redux/auth';
 import { removeToken } from 'src/helpers';
-import { updateUser } from 'src/redux/auth/userThunks';
 import { useEffect, useMemo, useState } from 'react';
 import { displayToast } from 'src/redux/ui';
 import { smartFinanceApi } from 'src/api';
@@ -118,7 +121,11 @@ export const Settings = () => {
       </View>
 
       <ScrollView style={styles.form}>
-        <FormControl label="Nombre" fieldError={errors?.fullName}>
+        <FormControl
+          label="Nombre"
+          fieldError={errors?.fullName}
+          style={styles.formControl}
+        >
           <Input
             id="fullName"
             value={fullName}
@@ -128,7 +135,11 @@ export const Settings = () => {
           />
         </FormControl>
 
-        <FormControl label="Email" fieldError={errors?.email}>
+        <FormControl
+          label="Email"
+          fieldError={errors?.email}
+          style={styles.formControl}
+        >
           <Input
             id="email"
             type="email-address"
@@ -139,7 +150,11 @@ export const Settings = () => {
           />
         </FormControl>
 
-        <FormControl label="País" fieldError={errors?.country}>
+        <FormControl
+          label="País"
+          fieldError={errors?.country}
+          style={styles.formControl}
+        >
           <Select
             id="country"
             value={country}
@@ -149,7 +164,11 @@ export const Settings = () => {
           />
         </FormControl>
 
-        <FormControl label="Moneda" fieldError={errors?.currency}>
+        <FormControl
+          label="Moneda"
+          fieldError={errors?.currency}
+          style={styles.formControl}
+        >
           <Select
             id="currency"
             value={currency}
@@ -160,7 +179,11 @@ export const Settings = () => {
           />
         </FormControl>
 
-        <FormControl label="Saldo" fieldError={errors?.balance}>
+        <FormControl
+          label="Saldo"
+          fieldError={errors?.balance}
+          style={styles.formControl}
+        >
           <Input
             id="balance"
             type="number-pad"
@@ -171,7 +194,11 @@ export const Settings = () => {
           />
         </FormControl>
 
-        <FormControl label="Contraseña" fieldError={errors?.password}>
+        <FormControl
+          label="Contraseña"
+          fieldError={errors?.password}
+          style={styles.formControl}
+        >
           <Input
             id="password"
             value={password}
