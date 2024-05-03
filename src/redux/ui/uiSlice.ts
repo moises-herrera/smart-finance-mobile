@@ -1,9 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { Toast } from 'src/interfaces';
-
-interface UiState {
-  toastNotifications: Toast[];
-}
+import { UiState } from 'src/redux/interfaces';
 
 const initialState: UiState = {
   toastNotifications: [],
