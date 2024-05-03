@@ -21,7 +21,6 @@ export const registerUser = createAsyncThunk<
       '/auth/register',
       user
     );
-
     await setToken(data.accessToken);
 
     return data.user;
@@ -47,14 +46,13 @@ export const loginUser = createAsyncThunk<User, UserAuth, AsyncThunkConfig>(
   'loginUser',
   async (user: UserAuth, { rejectWithValue }) => {
     try {
-      const { data } = await smartFinanceApi.post<AuthResponse>(
-        '/auth/login',
-        user
-      );
+      const {
+        data: { accessToken, user: userData },
+      } = await smartFinanceApi.post<AuthResponse>('/auth/login', user);
 
-      await setToken(data.accessToken);
+      await setToken(accessToken);
 
-      return data.user;
+      return userData;
     } catch (error) {
       const message: string =
         error instanceof AxiosError
@@ -90,7 +88,6 @@ export const validateAccessToken = createAsyncThunk<
     const { data } = await smartFinanceApi.get<AuthResponse>(
       '/auth/renew-token'
     );
-
     await setToken(data.accessToken);
 
     return data.user;
