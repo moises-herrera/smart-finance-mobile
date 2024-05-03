@@ -8,7 +8,7 @@ export interface CountryState {
   countries: Country[];
 
   /** Indicates if the countries are being loaded. */
-  isLoadingCountries: boolean;
+  areLoadingCountries: boolean;
 
   /** Error message when loading the countries. */
   countriesErrorMessage?: string | null;

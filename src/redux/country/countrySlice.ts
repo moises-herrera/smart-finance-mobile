@@ -4,7 +4,7 @@ import { getCountries } from 'src/redux/country/countryThunks';
 
 const initialState: CountryState = {
   countries: [],
-  isLoadingCountries: false,
+  areLoadingCountries: false,
   countriesErrorMessage: null,
 };
 
@@ -18,15 +18,15 @@ export const countrySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getCountries.pending, (state) => {
-      state.isLoadingCountries = true;
+      state.areLoadingCountries = true;
     });
     builder.addCase(getCountries.fulfilled, (state, { payload }) => {
       state.countries = payload;
-      state.isLoadingCountries = false;
+      state.areLoadingCountries = false;
     });
     builder.addCase(getCountries.rejected, (state, { payload }) => {
       state.countriesErrorMessage = payload?.message;
-      state.isLoadingCountries = false;
+      state.areLoadingCountries = false;
     });
   },
 });
