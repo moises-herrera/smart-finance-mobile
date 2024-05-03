@@ -5,6 +5,7 @@ import { otpSlice } from 'src/redux/otp';
 import { operationSlice } from 'src/redux/operation';
 import { acquiredStockSlice } from 'src/redux/acquired-stock';
 import { countrySlice } from 'src/redux/country';
+import { stockSlice } from '../stock';
 
 /**
  * Redux store configuration.
@@ -16,6 +17,7 @@ export const store = configureStore({
     ui: uiSlice.reducer,
     otp: otpSlice.reducer,
     operation: operationSlice.reducer,
+    stock: stockSlice.reducer,
     acquiredStock: acquiredStockSlice.reducer,
   },
 });
