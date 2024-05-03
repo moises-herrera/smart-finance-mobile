@@ -1,5 +1,5 @@
 import { View, Text, ScrollView } from 'react-native';
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { globalStyles } from 'src/styles';
 import {
   Button,
@@ -11,20 +11,19 @@ import {
 } from 'src/components';
 import { appTheme } from 'src/theme';
 import { styles } from 'src/screens/auth/styles';
-import { useAppDispatch, useAppSelector, useForm } from 'src/hooks';
 import {
-  AuthStackParamList,
-  FormSubmitHandler,
-  Country,
-  SelectOption,
-} from 'src/interfaces';
+  useAppDispatch,
+  useAppSelector,
+  useForm,
+  useGetCountries,
+} from 'src/hooks';
+import { AuthStackParamList, FormSubmitHandler } from 'src/interfaces';
 import { StackScreenProps } from '@react-navigation/stack';
 import {
   RegisterSchema,
   RegisterSchemaType,
 } from 'src/screens/auth/register/schemas';
 import { clearErrorMessage, registerUser } from 'src/redux/auth';
-import { smartFinanceApi } from 'src/api';
 import { displayToast } from 'src/redux/ui';
 
 interface RegisterProps
@@ -49,6 +48,13 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
     ({ auth: { authStatus: status } }) => status === 'loading'
   );
   const {
+    areLoadingCountries,
+    countriesOptions,
+    currenciesOptions,
+    setCountryIdSelected,
+  } = useGetCountries();
+
+  const {
     formState: {
       fullName,
       email,
@@ -63,42 +69,6 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
     handleSubmit,
     errors,
   } = useForm<RegisterSchemaType>(initialForm, RegisterSchema);
-  const [countries, setCountries] = useState<Country[]>([]);
-  const [areCountriesLoading, setAreCountriesLoading] = useState<boolean>(true);
-  const countriesOptions = useMemo<SelectOption[]>(
-    () =>
-      countries.map<SelectOption>((country) => ({
-        label: country.name,
-        value: country._id,
-      })),
-    [countries]
-  );
-  const [currenciesOptions, setCurrenciesOptions] = useState<SelectOption[]>(
-    []
-  );
-
-  const getCountries = async () => {
-    setAreCountriesLoading(true);
-    const { data } = await smartFinanceApi.get<Country[]>('/country');
-    setCountries(data);
-    setAreCountriesLoading(false);
-  };
-
-  useEffect(() => {
-    getCountries();
-  }, []);
-
-  useEffect(() => {
-    if (country) {
-      const currencies = countries.find(({ _id }) => _id === country);
-      const options =
-        currencies?.currencies.map<SelectOption>((currency) => ({
-          label: currency.name,
-          value: currency._id,
-        })) || [];
-      setCurrenciesOptions(options);
-    }
-  }, [country]);
 
   useEffect(() => {
     if (errorMessage) {
@@ -107,7 +77,12 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
     }
   }, [errorMessage]);
 
-  if (areCountriesLoading) {
+  const onChangeCountry = (id: string, value: string) => {
+    onInputChange(id, value);
+    setCountryIdSelected(value);
+  };
+
+  if (areLoadingCountries) {
     return <Loading />;
   }
 
@@ -156,7 +131,7 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
             id="country"
             value={country}
             options={countriesOptions}
-            onChange={onInputChange}
+            onChange={onChangeCountry}
             hasError={!!errors?.country}
           />
         </FormControl>
