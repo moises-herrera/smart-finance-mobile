@@ -1,5 +1,5 @@
-import { Country } from '../country';
-import { Stock } from './stock.interface';
+import { Country } from 'src/interfaces/country';
+import { Stock } from 'src/interfaces/finance/stock.interface';
 
 /**
  * Broker information.

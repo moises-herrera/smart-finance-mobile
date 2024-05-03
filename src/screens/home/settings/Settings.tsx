@@ -7,14 +7,7 @@ import {
   SettingsSchemaType,
 } from 'src/screens/home/settings/schemas';
 import { useAppDispatch, useAppSelector, useForm } from 'src/hooks';
-import {
-  Country,
-  Currency,
-  FormSubmitHandler,
-  SelectOption,
-  User,
-  UserInfo,
-} from 'src/interfaces';
+import { Country, FormSubmitHandler, SelectOption } from 'src/interfaces';
 import { appTheme } from 'src/theme';
 import { clearUserInfoErrorMessage, onLogout } from 'src/redux/auth';
 import { removeToken } from 'src/helpers';
@@ -70,9 +63,19 @@ export const Settings = () => {
       })),
     [countries]
   );
-  const [currenciesOptions, setCurrenciesOptions] = useState<SelectOption[]>(
-    []
-  );
+  const currenciesOptions = useMemo<
+    SelectOption[]
+  >(() => {
+    if (!country) return [];
+
+    const currencies = countries.find(({ _id }) => _id === country);
+    const options =
+      currencies?.currencies.map<SelectOption>((currency) => ({
+        label: currency.name,
+        value: currency._id,
+      })) || [];
+    return options;
+  }, [country, countries]);
 
   const getCountries = async () => {
     setAreCountriesLoading(true);
@@ -84,18 +87,6 @@ export const Settings = () => {
   useEffect(() => {
     getCountries();
   }, []);
-
-  useEffect(() => {
-    if (country) {
-      const currencies = countries.find(({ _id }) => _id === country);
-      const options =
-        currencies?.currencies.map<SelectOption>((currency) => ({
-          label: currency.name,
-          value: currency._id,
-        })) || [];
-      setCurrenciesOptions(options);
-    }
-  }, [country]);
 
   const logout = async () => {
     await removeToken();
