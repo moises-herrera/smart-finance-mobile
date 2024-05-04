@@ -53,7 +53,9 @@ export const StockDialog: FC<StockDialogProps> = ({
           />
         )}
 
-        {operationStep === 1 && <CompleteOperation />}
+        {operationStep === 1 && (
+          <CompleteOperation operationInfo={operationInfo} />
+        )}
       </View>
     </Dialog>
   );
