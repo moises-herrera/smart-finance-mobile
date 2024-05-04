@@ -1,25 +1,65 @@
-import { FormControl, Select, Input, Button } from 'src/components/ui';
-import { useForm } from 'src/hooks';
-import { FormSubmitHandler, SelectOption } from 'src/interfaces';
-import { brokers } from 'src/mock';
+import { FC, useEffect, useState } from 'react';
+import { FormControl, Select, Input, Button, Loading } from 'src/components/ui';
+import { useAppDispatch, useForm } from 'src/hooks';
+import {
+  Broker,
+  FormSubmitHandler,
+  OperationInfo,
+  SelectOption,
+} from 'src/interfaces';
 import {
   OperationSchema,
   OperationSchemaType,
 } from 'src/components/finance/complete-operation/schemas';
 import { View } from 'react-native';
 import { styles } from './styles';
+import { smartFinanceApi } from 'src/api';
+import { displayToast } from 'src/redux/ui';
 
-const brokerOptions: SelectOption[] = brokers.map(({ _id, name }) => ({
-  value: _id,
-  label: name,
-}));
+interface CompleteOperationProps {
+  operationInfo: OperationInfo;
+}
 
 const initialForm: OperationSchemaType = {
   broker: '',
   amount: 0,
 };
 
-export const CompleteOperation = () => {
+export const CompleteOperation: FC<CompleteOperationProps> = ({
+  operationInfo,
+}) => {
+  const dispatch = useAppDispatch();
+  const [brokers, setBrokers] = useState<SelectOption[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const getBrokersByStock = async () => {
+    try {
+      setIsLoading(true);
+      const { data } = await smartFinanceApi.get<Broker[]>('/broker', {
+        params: {
+          stockId: operationInfo.stockId,
+        },
+      });
+
+      const brokerOptions = data.map(({ _id, name }) => ({
+        value: _id,
+        label: name,
+      }));
+
+      setBrokers(brokerOptions);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      dispatch(
+        displayToast({ type: 'error', message: 'Ha ocurrido un error' })
+      );
+    }
+  };
+
+  useEffect(() => {
+    getBrokersByStock();
+  }, []);
+
   const {
     formState: { broker, amount },
     handleSubmit,
@@ -30,13 +70,13 @@ export const CompleteOperation = () => {
 
   const onComplete: FormSubmitHandler<OperationSchemaType> = (data) => {};
 
-  return (
+  return !isLoading ? (
     <>
       <View style={styles.form}>
         <FormControl label="Broker" fieldError={errors?.broker}>
           <Select
             id="broker"
-            options={brokerOptions}
+            options={brokers}
             value={broker}
             onChange={onInputChange}
             hasError={!!errors?.broker}
@@ -57,5 +97,7 @@ export const CompleteOperation = () => {
 
       <Button label="Completar" onPress={() => handleSubmit(onComplete)} />
     </>
+  ) : (
+    <Loading />
   );
 };

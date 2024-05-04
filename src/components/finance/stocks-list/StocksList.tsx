@@ -3,8 +3,8 @@ import { FlatList, Text, View, Pressable } from 'react-native';
 import { Divider } from 'src/components/ui';
 import { Stock } from 'src/interfaces';
 import { globalStyles } from 'src/styles';
-import { StockListItem } from '../stock-list-item';
-import { StockDialog } from '../stock-dialog';
+import { StockListItem } from 'src/components/finance/stock-list-item';
+import { StockDialog } from 'src/components/finance/stock-dialog';
 import { styles } from './styles';
 import { OperationInfo } from 'src/interfaces';
 
@@ -24,12 +24,14 @@ export const StocksList: FC<StocksListProps> = ({
 
   const onStockPress = (stock: Stock): void => {
     setIsDialogOpen(true);
-    setOperationInfo({
+    const operationInfo: OperationInfo = {
+      stockId: stock._id,
       label: stock.label,
       symbol: stock.symbol,
       quantity: stock.price,
       isBuy,
-    });
+    };
+    setOperationInfo(operationInfo);
   };
 
   const onCloseDialog = () => {
