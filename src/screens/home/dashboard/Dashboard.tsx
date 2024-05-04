@@ -2,10 +2,11 @@ import { View } from 'react-native';
 import { styles } from './styles';
 import { BalanceCard, Loading, StocksList } from 'src/components';
 import { useAppDispatch, useAppSelector } from 'src/hooks';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { clearErrorMessage, getAcquiredStocks } from 'src/redux/acquired-stock';
 import { displayToast } from 'src/redux/ui';
 import { parseAcquiredStocks } from 'src/helpers';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const Dashboard = () => {
   const dispatch = useAppDispatch();
@@ -24,16 +25,20 @@ export const Dashboard = () => {
     return parseAcquiredStocks(stocks);
   }, [stocks]);
 
-  useEffect(() => {
-    dispatch(getAcquiredStocks());
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(getAcquiredStocks());
+    }, [])
+  );
 
-  useEffect(() => {
-    if (errorMessage) {
-      dispatch(displayToast({ message: errorMessage, type: 'error' }));
-      dispatch(clearErrorMessage());
-    }
-  }, [errorMessage]);
+  useFocusEffect(
+    useCallback(() => {
+      if (errorMessage) {
+        dispatch(displayToast({ message: errorMessage, type: 'error' }));
+        dispatch(clearErrorMessage());
+      }
+    }, [errorMessage])
+  );
 
   return (
     <View style={styles.container}>

@@ -1,10 +1,11 @@
 import { View } from 'react-native';
 import { Loading, OperationsList } from 'src/components';
 import { styles } from './styles';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/hooks';
 import { getUserOperations, clearErrorMessage } from 'src/redux/operation';
 import { displayToast } from 'src/redux/ui';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const Operations = () => {
   const dispatch = useAppDispatch();
@@ -20,12 +21,14 @@ export const Operations = () => {
     dispatch(getUserOperations());
   }, []);
 
-  useEffect(() => {
-    if (errorMessage) {
-      dispatch(displayToast({ message: errorMessage, type: 'error' }));
-      dispatch(clearErrorMessage());
-    }
-  }, [errorMessage]);
+  useFocusEffect(
+    useCallback(() => {
+      if (errorMessage) {
+        dispatch(displayToast({ message: errorMessage, type: 'error' }));
+        dispatch(clearErrorMessage());
+      }
+    }, [errorMessage])
+  );
 
   return (
     <View style={styles.container}>

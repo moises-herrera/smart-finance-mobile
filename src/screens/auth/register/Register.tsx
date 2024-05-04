@@ -1,5 +1,5 @@
 import { View, Text, ScrollView } from 'react-native';
-import { FC, useEffect } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 import { globalStyles } from 'src/styles';
 import {
   Button,
@@ -25,6 +25,7 @@ import {
 } from 'src/screens/auth/register/schemas';
 import { clearErrorMessage, registerUser } from 'src/redux/auth';
 import { displayToast } from 'src/redux/ui';
+import { useFocusEffect } from '@react-navigation/native';
 
 interface RegisterProps
   extends StackScreenProps<AuthStackParamList, 'Register'> {}
@@ -70,12 +71,14 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
     errors,
   } = useForm<RegisterSchemaType>(initialForm, RegisterSchema);
 
-  useEffect(() => {
-    if (errorMessage) {
-      dispatch(displayToast({ message: errorMessage, type: 'error' }));
-      dispatch(clearErrorMessage());
-    }
-  }, [errorMessage]);
+  useFocusEffect(
+    useCallback(() => {
+      if (errorMessage) {
+        dispatch(displayToast({ message: errorMessage, type: 'error' }));
+        dispatch(clearErrorMessage());
+      }
+    }, [errorMessage])
+  );
 
   const onChangeCountry = (id: string, value: string) => {
     onInputChange(id, value);

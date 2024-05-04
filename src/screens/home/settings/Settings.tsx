@@ -20,8 +20,9 @@ import {
   updateUser,
 } from 'src/redux/auth';
 import { removeToken } from 'src/helpers';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { displayToast } from 'src/redux/ui';
+import { useFocusEffect } from '@react-navigation/native';
 
 const initialForm: SettingsSchemaType = {
   fullName: '',
@@ -53,6 +54,8 @@ export const Settings = () => {
     onInputChange,
     onBlur,
     handleSubmit,
+    onSetForm,
+    onResetForm,
     errors,
   } = useForm<SettingsSchemaType>(user ?? initialForm, SettingsSchema);
 
@@ -66,12 +69,26 @@ export const Settings = () => {
       });
   };
 
-  useEffect(() => {
-    if (userInfoErrorMessage) {
-      dispatch(displayToast({ message: userInfoErrorMessage, type: 'error' }));
-      dispatch(clearUserInfoErrorMessage());
-    }
-  }, [userInfoErrorMessage]);
+  useFocusEffect(
+    useCallback(() => {
+      if (userInfoErrorMessage) {
+        dispatch(
+          displayToast({ message: userInfoErrorMessage, type: 'error' })
+        );
+        dispatch(clearUserInfoErrorMessage());
+      }
+    }, [userInfoErrorMessage])
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      onSetForm(user ?? initialForm);
+
+      return () => {
+        onResetForm();
+      };
+    }, [])
+  );
 
   const onChangeCountry = (id: string, value: string) => {
     onInputChange(id, value);
