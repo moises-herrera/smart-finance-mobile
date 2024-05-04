@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useCallback } from 'react';
 import { View } from 'react-native';
 import { Loading, StocksList } from 'src/components';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from 'src/hooks';
 import { getAvailableStocks } from 'src/redux/stock';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const Market = () => {
   const dispatch = useAppDispatch();
@@ -13,9 +14,11 @@ export const Market = () => {
     ({ stock: { areLoadingStocks } }) => areLoadingStocks
   );
 
-  useEffect(() => {
-    dispatch(getAvailableStocks());
-  }, [userCountry]);
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(getAvailableStocks());
+    }, [userCountry])
+  );
 
   return (
     <View style={styles.container}>

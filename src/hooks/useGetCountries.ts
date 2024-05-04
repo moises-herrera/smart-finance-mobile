@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { SelectOption } from 'src/interfaces';
 import { useAppSelector } from './useAppSelector';
 import { useAppDispatch } from './useAppDispatch';
-import { getCountries } from 'src/redux/country';
+import { clearErrorMessage, getCountries } from 'src/redux/country';
 import { displayToast } from 'src/redux/ui';
 
 export const useGetCountries = (initialCountryIdSelected?: string) => {
@@ -27,6 +27,7 @@ export const useGetCountries = (initialCountryIdSelected?: string) => {
   useEffect(() => {
     if (countriesErrorMessage) {
       dispatch(displayToast({ message: countriesErrorMessage, type: 'error' }));
+      dispatch(clearErrorMessage());
     }
   }, [countriesErrorMessage]);
 
