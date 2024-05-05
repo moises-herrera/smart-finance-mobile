@@ -1,20 +1,26 @@
 import { FC, useEffect, useState } from 'react';
 import { FormControl, Select, Input, Button, Loading } from 'src/components/ui';
-import { useAppDispatch, useForm } from 'src/hooks';
+import { useAppDispatch, useAppSelector, useForm } from 'src/hooks';
 import {
   Broker,
+  CreateOperation,
   FormSubmitHandler,
   OperationInfo,
+  OperationType,
   SelectOption,
 } from 'src/interfaces';
 import {
   OperationSchema,
   OperationSchemaType,
 } from 'src/components/finance/complete-operation/schemas';
-import { View } from 'react-native';
+import { Keyboard, View } from 'react-native';
 import { styles } from './styles';
 import { smartFinanceApi } from 'src/api';
 import { displayToast } from 'src/redux/ui';
+import {
+  clearCreateOperationErrorMessage,
+  createOperation,
+} from 'src/redux/operation';
 
 interface CompleteOperationProps {
   operationInfo: OperationInfo;
@@ -22,19 +28,28 @@ interface CompleteOperationProps {
 
 const initialForm: OperationSchemaType = {
   broker: '',
-  amount: 0,
+  quantity: 0,
 };
 
 export const CompleteOperation: FC<CompleteOperationProps> = ({
   operationInfo,
 }) => {
   const dispatch = useAppDispatch();
+  const isCreatingOperation = useAppSelector(
+    ({ operation: { isCreatingOperation } }) => isCreatingOperation
+  );
+  const createOperationErrorMessage = useAppSelector(
+    ({ operation: { createOperationErrorMessage } }) =>
+      createOperationErrorMessage
+  );
+
   const [brokers, setBrokers] = useState<SelectOption[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [areLoadingBrokers, setAreLoadingBrokers] = useState<boolean>(false);
 
   const getBrokersByStock = async () => {
+    setAreLoadingBrokers(true);
+
     try {
-      setIsLoading(true);
       const { data } = await smartFinanceApi.get<Broker[]>('/broker', {
         params: {
           stockId: operationInfo.stockId,
@@ -47,13 +62,13 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
       }));
 
       setBrokers(brokerOptions);
-      setIsLoading(false);
     } catch (error) {
-      setIsLoading(false);
       dispatch(
         displayToast({ type: 'error', message: 'Ha ocurrido un error' })
       );
     }
+
+    setAreLoadingBrokers(false);
   };
 
   useEffect(() => {
@@ -61,16 +76,33 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
   }, []);
 
   const {
-    formState: { broker, amount },
+    formState: { broker, quantity },
     handleSubmit,
     onInputChange,
     onBlur,
     errors,
   } = useForm<OperationSchemaType>(initialForm, OperationSchema);
 
-  const onComplete: FormSubmitHandler<OperationSchemaType> = (data) => {};
+  const onComplete: FormSubmitHandler<OperationSchemaType> = (data) => {
+    Keyboard.dismiss();
+    const operationData: CreateOperation = {
+      stock: operationInfo.stockId,
+      type: operationInfo.isBuy ? OperationType.Purchase : OperationType.Sale,
+      ...data,
+    };
+    dispatch(createOperation(operationData));
+  };
 
-  return !isLoading ? (
+  useEffect(() => {
+    if (createOperationErrorMessage) {
+      dispatch(
+        displayToast({ type: 'error', message: createOperationErrorMessage })
+      );
+      dispatch(clearCreateOperationErrorMessage());
+    }
+  }, [createOperationErrorMessage]);
+
+  return !areLoadingBrokers ? (
     <>
       <View style={styles.form}>
         <FormControl label="Broker" fieldError={errors?.broker}>
@@ -83,19 +115,23 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
           />
         </FormControl>
 
-        <FormControl label="Cantidad" fieldError={errors?.amount}>
+        <FormControl label="Cantidad" fieldError={errors?.quantity}>
           <Input
-            id="amount"
+            id="quantity"
             type="number-pad"
-            value={amount.toString()}
-            onChange={onInputChange}
+            value={quantity.toString()}
+            onChange={(id, value) => onInputChange(id, Number(value))}
             onBlur={onBlur}
-            hasError={!!errors?.amount}
+            hasError={!!errors?.quantity}
           />
         </FormControl>
       </View>
 
-      <Button label="Completar" onPress={() => handleSubmit(onComplete)} />
+      <Button
+        label="Completar"
+        onPress={() => handleSubmit(onComplete)}
+        isLoading={isCreatingOperation}
+      />
     </>
   ) : (
     <Loading />

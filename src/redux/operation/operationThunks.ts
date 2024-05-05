@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 import { smartFinanceApi } from 'src/api';
-import { Operation } from 'src/interfaces';
+import { Operation, CreateOperation, StandardResponse } from 'src/interfaces';
 import { AsyncThunkConfig } from 'src/redux/interfaces';
 
 /**
@@ -21,6 +21,34 @@ export const getUserOperations = createAsyncThunk<
       error instanceof AxiosError
         ? error.response?.data.message
         : 'Ha ocurrido un error al cargar las operaciones.';
+
+    return rejectWithValue({
+      message,
+    });
+  }
+});
+
+/**
+ * Create a new operation.
+ */
+export const createOperation = createAsyncThunk<
+  Operation,
+  CreateOperation,
+  AsyncThunkConfig
+>('createOperation', async (operation, { rejectWithValue }) => {
+  try {
+    const { data } = await smartFinanceApi.post<StandardResponse<Operation>>(
+      '/operation',
+      operation
+    );
+
+    return data.data as Operation;
+  } catch (error) {
+    console.log((error as AxiosError)?.toJSON());
+    const message =
+      error instanceof AxiosError
+        ? error.response?.data.message
+        : 'Ha ocurrido un error.';
 
     return rejectWithValue({
       message,
