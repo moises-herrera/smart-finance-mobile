@@ -24,6 +24,7 @@ import {
 
 interface CompleteOperationProps {
   operationInfo: OperationInfo;
+  closeDialog: () => void;
 }
 
 const initialForm: OperationSchemaType = {
@@ -33,6 +34,7 @@ const initialForm: OperationSchemaType = {
 
 export const CompleteOperation: FC<CompleteOperationProps> = ({
   operationInfo,
+  closeDialog,
 }) => {
   const dispatch = useAppDispatch();
   const isCreatingOperation = useAppSelector(
@@ -90,7 +92,12 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
       type: operationInfo.isBuy ? OperationType.Purchase : OperationType.Sale,
       ...data,
     };
-    dispatch(createOperation(operationData));
+    dispatch(createOperation(operationData)).then(() => {
+      dispatch(
+        displayToast({ type: 'success', message: 'Operación completada' })
+      );
+      closeDialog();
+    });
   };
 
   useEffect(() => {
