@@ -1,8 +1,8 @@
+import { useCallback, useMemo } from 'react';
 import { View } from 'react-native';
 import { styles } from './styles';
 import { BalanceCard, Loading, StocksList } from 'src/components';
 import { useAppDispatch, useAppSelector } from 'src/hooks';
-import { useCallback, useEffect, useMemo } from 'react';
 import { clearErrorMessage, getAcquiredStocks } from 'src/redux/acquired-stock';
 import { displayToast } from 'src/redux/ui';
 import { parseAcquiredStocks } from 'src/helpers';

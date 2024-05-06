@@ -1,4 +1,10 @@
 import { StyleSheet } from 'react-native';
-import { appTheme } from 'src/theme';
 
-export const styles = StyleSheet.create({});
+export const styles = StyleSheet.create({
+  backButton: {
+    position: 'absolute',
+    zIndex: 1,
+    top: 16,
+    left: 16,
+  },
+});
