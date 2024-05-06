@@ -6,6 +6,7 @@ import { Operation, OperationType } from 'src/interfaces';
 import { operationTypes } from 'src/mock';
 import { globalStyles } from 'src/styles';
 import { styles } from './styles';
+import { getDateFormatted } from 'src/helpers';
 
 interface OperationsListProps {
   title: string;
@@ -71,7 +72,7 @@ export const OperationsList: FC<OperationsListProps> = ({
                 }}
               />
               <Text style={styles.dateLabel}>
-                {new Date(createdAt).toLocaleDateString()}
+                {getDateFormatted(createdAt)}
               </Text>
               <Divider marginVertical={10} />
             </>
