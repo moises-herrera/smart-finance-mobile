@@ -12,4 +12,10 @@ export interface OperationState {
 
   /** Error message when loading the operations. */
   errorMessage?: string | null;
+
+  /** Indicates if an operation is being created. */
+  isCreatingOperation: boolean;
+
+  /** Error message when creating an operation. */
+  createOperationErrorMessage?: string | null;
 }

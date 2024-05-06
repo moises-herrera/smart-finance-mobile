@@ -23,14 +23,13 @@ export const StockDialog: FC<StockDialogProps> = ({
     setOperationStep(1);
   };
 
+  const closeDialog = (): void => {
+    onClose();
+    setOperationStep(0);
+  };
+
   return (
-    <Dialog
-      isOpen={isOpen}
-      onClose={() => {
-        onClose();
-        setOperationStep(0);
-      }}
-    >
+    <Dialog isOpen={isOpen} onClose={closeDialog}>
       {operationStep !== 0 && (
         <Pressable
           style={{
@@ -54,7 +53,10 @@ export const StockDialog: FC<StockDialogProps> = ({
         )}
 
         {operationStep === 1 && (
-          <CompleteOperation operationInfo={operationInfo} />
+          <CompleteOperation
+            operationInfo={operationInfo}
+            closeDialog={closeDialog}
+          />
         )}
       </View>
     </Dialog>
