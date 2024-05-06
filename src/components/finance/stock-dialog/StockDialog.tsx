@@ -5,6 +5,7 @@ import { OperationInfo } from 'src/interfaces';
 import { AntDesign } from '@expo/vector-icons';
 import { StartOperation } from 'src/components/finance/start-operation';
 import { CompleteOperation } from 'src/components/finance/complete-operation';
+import { styles } from './styles';
 
 interface StockDialogProps {
   isOpen: boolean;
@@ -32,12 +33,7 @@ export const StockDialog: FC<StockDialogProps> = ({
     <Dialog isOpen={isOpen} onClose={closeDialog}>
       {operationStep !== 0 && (
         <Pressable
-          style={{
-            position: 'absolute',
-            zIndex: 1,
-            top: 16,
-            left: 16,
-          }}
+          style={styles.backButton}
           onPress={() => setOperationStep(0)}
         >
           <AntDesign name="arrowleft" size={24} color="black" />
