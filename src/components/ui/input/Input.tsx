@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Keyboard, KeyboardTypeOptions, TextInput } from 'react-native';
+import { KeyboardTypeOptions, TextInput } from 'react-native';
 import { globalStyles } from 'src/styles';
 
 export interface InputProps {
