@@ -10,8 +10,10 @@ import { useFocusEffect } from '@react-navigation/native';
 
 export const Dashboard = () => {
   const dispatch = useAppDispatch();
-  const userFullName = useAppSelector(({ auth: { user } }) => user?.fullName);
-  const balance = useAppSelector(({ auth: { user } }) => user?.balance || 0);
+  const user = useAppSelector(({ auth: { user } }) => user);
+  const isLoadingUserBalance = useAppSelector(
+    ({ auth: { isLoadingUserBalance } }) => isLoadingUserBalance
+  );
   const stocks = useAppSelector(
     ({ acquiredStock: { acquiredStocks } }) => acquiredStocks
   );
@@ -42,7 +44,11 @@ export const Dashboard = () => {
 
   return (
     <View style={styles.container}>
-      <BalanceCard balance={balance} name={userFullName as string} />
+      <BalanceCard
+        balance={user?.balance ?? 0}
+        name={user?.fullName as string}
+        isLoadingBalance={isLoadingUserBalance}
+      />
       {!isLoading ? (
         <StocksList
           title="Acciones adquiridas"

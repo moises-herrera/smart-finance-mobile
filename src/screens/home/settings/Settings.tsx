@@ -20,7 +20,7 @@ import {
   updateUser,
 } from 'src/redux/auth';
 import { removeToken } from 'src/helpers';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { displayToast } from 'src/redux/ui';
 import { useFocusEffect } from '@react-navigation/native';
 
