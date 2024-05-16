@@ -18,4 +18,7 @@ export interface Stock {
 
   /** Stock base currency. */
   currency: Currency;
+
+  /** Stock covenrsion currency */
+  conversionCurrency: Currency | null;
 }
