@@ -3,11 +3,12 @@ import { View, Text } from 'react-native';
 import { formatCurrency } from 'src/helpers';
 import { styles } from './styles';
 import { Button } from 'src/components/ui';
-import { OperationInfo } from 'src/interfaces';
+import { Currency, OperationInfo } from 'src/interfaces';
 
 interface OperationInfoProps {
   operationInfo: OperationInfo;
   onStartOperation: () => void;
+  currency: Currency;
 }
 
 export const StartOperation: FC<OperationInfoProps> = ({

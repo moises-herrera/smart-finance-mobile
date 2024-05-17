@@ -2,11 +2,13 @@ import { FC } from 'react';
 import { Text, View } from 'react-native';
 import { styles } from './styles';
 import { formatCurrency } from 'src/helpers';
+import { Currency } from 'src/interfaces/country';
 
 interface BalanceCardProps {
   balance: number;
   name: string;
   isLoadingBalance?: boolean;
+  currency: Currency;
 }
 
 export const BalanceCard: FC<BalanceCardProps> = ({
