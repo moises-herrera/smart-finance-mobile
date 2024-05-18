@@ -3,6 +3,7 @@ import { Text, View } from 'react-native';
 import { styles } from './styles';
 import { Stock } from 'src/interfaces';
 import { globalStyles } from 'src/styles';
+import { formatCurrency } from 'src/helpers';
 
 interface StockListItemProps extends Stock {}
 
@@ -13,7 +14,6 @@ export const StockListItem: FC<StockListItemProps> = ({
   currency,
   conversionCurrency,
 }) => {
-  console.log(currency);
   const currencyReference = conversionCurrency || currency;
   return (
     <View style={styles.container}>
@@ -24,7 +24,10 @@ export const StockListItem: FC<StockListItemProps> = ({
       <Text
         style={[globalStyles.subTitle, { fontSize: 14, textAlign: 'right' }]}
       >
-        {`${currencyReference.code} ${price.toFixed(2)}`}
+        {`${currencyReference.code} ${formatCurrency(
+          price.toFixed(2),
+          currency.code
+        )}`}
       </Text>
     </View>
   );

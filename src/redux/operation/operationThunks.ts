@@ -44,7 +44,6 @@ export const createOperation = createAsyncThunk<
 
     return data.data as Operation;
   } catch (error) {
-    console.log((error as AxiosError)?.toJSON());
     const message =
       error instanceof AxiosError
         ? error.response?.data.message

@@ -130,7 +130,9 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
             id="quantity"
             type="number-pad"
             value={quantity.toString()}
-            onChange={(id, value) => onInputChange(id, Number(value))}
+            onChange={(id, value) =>
+              onInputChange(id, !isNaN(Number(value)) ? Number(value) : 0)
+            }
             onBlur={onBlur}
             hasError={!!errors?.quantity}
           />
