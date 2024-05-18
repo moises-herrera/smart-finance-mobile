@@ -40,7 +40,7 @@ export const Select: FC<SelectProps> = ({
           borderColor: appTheme.colors.error.primary,
         },
         disabled && {
-          opacity: 0.6,
+          opacity: 0.5,
         },
       ]}
     >
