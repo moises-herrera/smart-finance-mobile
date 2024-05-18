@@ -25,7 +25,7 @@ export const StockListItem: FC<StockListItemProps> = ({
         style={[globalStyles.subTitle, { fontSize: 14, textAlign: 'right' }]}
       >
         {`${currencyReference.code} ${formatCurrency(
-          price.toFixed(2),
+          Number(price.toFixed(2)),
           currency.code
         )}`}
       </Text>
