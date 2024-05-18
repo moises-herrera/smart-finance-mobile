@@ -26,7 +26,7 @@ export const StockListItem: FC<StockListItemProps> = ({
       >
         {`${currencyReference.code} ${formatCurrency(
           Number(price.toFixed(2)),
-          currency.code
+          currencyReference.code
         )}`}
       </Text>
     </View>
