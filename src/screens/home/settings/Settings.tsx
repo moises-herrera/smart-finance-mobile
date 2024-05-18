@@ -12,7 +12,7 @@ import {
   useForm,
   useGetCountries,
 } from 'src/hooks';
-import { FormSubmitHandler } from 'src/interfaces';
+import { FormSubmitHandler, User } from 'src/interfaces';
 import { appTheme } from 'src/theme';
 import {
   clearUserInfoErrorMessage,
@@ -50,6 +50,14 @@ export const Settings = () => {
   } = useGetCountries(user?.country as string);
 
   const {
+    currency: { _id: currencyId },
+    ...userFields
+  } = user as User;
+  const userFormData = {
+    ...userFields,
+    currency: currencyId,
+  };
+  const {
     formState: { fullName, email, country, currency, balance, password },
     onInputChange,
     onBlur,
@@ -57,7 +65,7 @@ export const Settings = () => {
     onSetForm,
     onResetForm,
     errors,
-  } = useForm<SettingsSchemaType>(user ?? initialForm, SettingsSchema);
+  } = useForm<SettingsSchemaType>(userFormData ?? initialForm, SettingsSchema);
 
   const onSubmit: FormSubmitHandler<SettingsSchemaType> = (data) => {
     dispatch(updateUser({ id: user?._id as string, userData: data }))
@@ -82,7 +90,7 @@ export const Settings = () => {
 
   useFocusEffect(
     useCallback(() => {
-      onSetForm(user ?? initialForm);
+      onSetForm(userFormData ?? initialForm);
 
       return () => {
         onResetForm();

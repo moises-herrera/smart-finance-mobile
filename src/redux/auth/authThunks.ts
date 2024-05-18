@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 import { smartFinanceApi } from 'src/api';
 import { getToken, setToken } from 'src/helpers';
-import { AuthResponse, User, UserAuth } from 'src/interfaces';
+import { AuthResponse, CreateUserInfo, User, UserAuth } from 'src/interfaces';
 import { AsyncThunkConfig } from 'src/redux/interfaces';
 
 /**
@@ -13,28 +13,31 @@ import { AsyncThunkConfig } from 'src/redux/interfaces';
  */
 export const registerUser = createAsyncThunk<
   User,
-  Partial<User>,
+  Partial<CreateUserInfo>,
   AsyncThunkConfig
->('registerUser', async (user: Partial<User>, { rejectWithValue }) => {
-  try {
-    const { data } = await smartFinanceApi.post<AuthResponse>(
-      '/auth/register',
-      user
-    );
-    await setToken(data.accessToken);
+>(
+  'registerUser',
+  async (user: Partial<CreateUserInfo>, { rejectWithValue }) => {
+    try {
+      const { data } = await smartFinanceApi.post<AuthResponse>(
+        '/auth/register',
+        user
+      );
+      await setToken(data.accessToken);
 
-    return data.user;
-  } catch (error) {
-    const message =
-      error instanceof AxiosError
-        ? error.response?.data.message
-        : 'Ha ocurrido un error al intentar registrarse.';
+      return data.user;
+    } catch (error) {
+      const message =
+        error instanceof AxiosError
+          ? error.response?.data.message
+          : 'Ha ocurrido un error al intentar registrarse.';
 
-    return rejectWithValue({
-      message,
-    });
+      return rejectWithValue({
+        message,
+      });
+    }
   }
-});
+);
 
 /**
  * Login a user.

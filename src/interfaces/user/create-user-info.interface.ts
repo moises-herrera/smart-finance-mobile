@@ -1,9 +1,9 @@
 import { Country, Currency } from 'src/interfaces/country';
 
 /**
- * Represents a user.
+ * Represents the data needed to create a user.
  */
-export interface UserInfo {
+export interface CreateUserInfo {
   /** User id. */
   _id: string;
 
@@ -14,10 +14,10 @@ export interface UserInfo {
   email: string;
 
   /** User country. */
-  country: Country;
+  country: string;
 
   /** User currency. */
-  currency: Currency;
+  currency: string;
 
   /** User balance. */
   balance: number;

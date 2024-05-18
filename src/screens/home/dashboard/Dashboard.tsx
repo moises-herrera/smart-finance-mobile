@@ -7,6 +7,7 @@ import { clearErrorMessage, getAcquiredStocks } from 'src/redux/acquired-stock';
 import { displayToast } from 'src/redux/ui';
 import { parseAcquiredStocks } from 'src/helpers';
 import { useFocusEffect } from '@react-navigation/native';
+import { Currency } from 'src/interfaces';
 
 export const Dashboard = () => {
   const dispatch = useAppDispatch();
@@ -48,6 +49,7 @@ export const Dashboard = () => {
         balance={user?.balance ?? 0}
         name={user?.fullName as string}
         isLoadingBalance={isLoadingUserBalance}
+        currency={user?.currency as Currency}
       />
       {!isLoading ? (
         <StocksList

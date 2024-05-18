@@ -8,11 +8,10 @@ import { Currency, OperationInfo } from 'src/interfaces';
 interface OperationInfoProps {
   operationInfo: OperationInfo;
   onStartOperation: () => void;
-  currency: Currency;
 }
 
 export const StartOperation: FC<OperationInfoProps> = ({
-  operationInfo: { label, symbol, quantity, isBuy },
+  operationInfo: { label, symbol, quantity, isBuy, currency },
   onStartOperation,
 }) => {
   const buttonLabel = isBuy ? 'Comprar' : 'Vender';
@@ -24,8 +23,10 @@ export const StartOperation: FC<OperationInfoProps> = ({
         <Text style={styles.symbolText}>{symbol}</Text>
       </View>
       <View style={styles.amountContainer}>
-        <Text style={styles.stockAmount}>{formatCurrency(quantity)}</Text>
-        <Text style={styles.currencyText}>USD</Text>
+        <Text style={styles.stockAmount}>
+          {formatCurrency(quantity, currency.code)}
+        </Text>
+        <Text style={styles.currencyText}>{currency.code}</Text>
       </View>
 
       <View

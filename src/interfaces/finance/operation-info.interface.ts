@@ -1,3 +1,5 @@
+import { Currency } from '../country';
+
 /**
  * Information about an operation.
  */
@@ -16,4 +18,7 @@ export interface OperationInfo {
 
   /** Whether the operation is a buy. */
   isBuy: boolean;
+
+  /** The currency used to make the operation. */
+  currency: Currency;
 }

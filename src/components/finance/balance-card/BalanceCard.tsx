@@ -15,8 +15,9 @@ export const BalanceCard: FC<BalanceCardProps> = ({
   balance,
   name,
   isLoadingBalance = false,
+  currency,
 }) => {
-  const balanceFormatted = formatCurrency(balance);
+  const balanceFormatted = formatCurrency(balance, currency.code);
   const balaceLabel = !isLoadingBalance ? balanceFormatted : 'Cargando..';
 
   return (
