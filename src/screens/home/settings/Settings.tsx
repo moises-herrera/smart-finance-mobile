@@ -161,6 +161,7 @@ export const Settings = () => {
             options={countriesOptions}
             onChange={onChangeCountry}
             hasError={!!errors?.country}
+            disabled
           />
         </FormControl>
 
@@ -175,7 +176,7 @@ export const Settings = () => {
             options={currenciesOptions}
             onChange={onInputChange}
             hasError={!!errors?.currency}
-            disabled={!country}
+            disabled
           />
         </FormControl>
 
