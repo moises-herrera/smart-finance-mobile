@@ -21,7 +21,6 @@ import {
   clearCreateOperationErrorMessage,
   createOperation,
 } from 'src/redux/operation';
-import { getUserBalance } from 'src/redux/auth';
 
 interface CompleteOperationProps {
   operationInfo: OperationInfo;
@@ -97,11 +96,7 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
       ...data,
     };
     dispatch(createOperation(operationData)).then(() => {
-      dispatch(
-        displayToast({ type: 'success', message: 'Operación completada' })
-      );
       closeDialog();
-      dispatch(getUserBalance(user?._id as string));
     });
   };
 
