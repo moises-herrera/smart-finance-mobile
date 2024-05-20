@@ -85,6 +85,7 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
     handleSubmit,
     onInputChange,
     onBlur,
+    onSetForm,
     errors,
   } = useForm<OperationSchemaType>(initialForm, OperationSchema);
 
@@ -113,18 +114,30 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
     }
   }, [createOperationErrorMessage]);
 
-  const onChangeStockQuantity = (id: string, value: string) => {
-    const stocksQuantity = Number(value);
-    onInputChange(id, stocksQuantity);
-    const moneyAmount = stocksQuantity * operationInfo.quantity;
-    onInputChange('moneyAmount', moneyAmount);
+  const onChangeStockQuantity = (_id: string, value: string) => {
+    const cleanValue = value.replaceAll(',', '');
+    const stocksQuantity = Number(Number(cleanValue).toFixed(6));
+    const moneyAmount = Number(
+      Number(stocksQuantity * operationInfo.quantity).toFixed(2)
+    );
+    onSetForm({
+      broker,
+      quantity: stocksQuantity,
+      moneyAmount,
+    });
   };
 
-  const onChangeMoneyAmount = (id: string, value: string) => {
-    const moneyAmountParsed = Number(value);
-    onInputChange(id, moneyAmountParsed);
-    const stocksQuantity = moneyAmountParsed / operationInfo.quantity;
-    onInputChange('quantity', stocksQuantity);
+  const onChangeMoneyAmount = (_id: string, value: string) => {
+    const cleanValue = value.replaceAll(',', '');
+    const moneyAmountParsed = Number(Number(cleanValue).toFixed(2));
+    const stocksQuantity = Number(
+      Number(moneyAmountParsed / operationInfo.quantity).toFixed(6)
+    );
+    onSetForm({
+      broker,
+      quantity: stocksQuantity,
+      moneyAmount: moneyAmountParsed,
+    });
   };
 
   return !areLoadingBrokers ? (
