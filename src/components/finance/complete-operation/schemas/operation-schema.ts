@@ -9,6 +9,7 @@ export const OperationSchema = z.object({
     (value) => Number(value),
     z.number().min(1, 'La cantidad es requerida')
   ),
+  moneyAmount: z.preprocess((value) => Number(value), z.number()),
 });
 
 /**
