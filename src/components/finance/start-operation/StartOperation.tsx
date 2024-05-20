@@ -26,7 +26,6 @@ export const StartOperation: FC<OperationInfoProps> = ({
         <Text style={styles.stockAmount}>
           {formatCurrency(quantity, currency.code)}
         </Text>
-        <Text style={styles.currencyText}>{currency.code}</Text>
       </View>
 
       <View
