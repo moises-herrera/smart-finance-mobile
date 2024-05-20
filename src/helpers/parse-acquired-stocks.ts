@@ -9,8 +9,9 @@ import { AcquiredStock, Stock } from 'src/interfaces';
 export const parseAcquiredStocks = (
   acquiredStocks: AcquiredStock[]
 ): Stock[] => {
-  return acquiredStocks.map(({ stock, totalQuantity }) => ({
+  return acquiredStocks.map(({ stock, totalQuantity, currency }) => ({
     ...stock,
     price: totalQuantity,
+    currency,
   }));
 };

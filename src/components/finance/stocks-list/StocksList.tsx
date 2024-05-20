@@ -30,6 +30,7 @@ export const StocksList: FC<StocksListProps> = ({
       symbol: stock.symbol,
       quantity: stock.price,
       isBuy,
+      currency: stock.conversionCurrency || stock.currency,
     };
     setOperationInfo(operationInfo);
   };

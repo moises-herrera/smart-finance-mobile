@@ -1,6 +1,7 @@
 import { OperationType } from 'src/interfaces/enums';
 import { Stock } from './stock.interface';
 import { Broker } from './broker.interface';
+import { Currency } from '../country';
 
 /**
  * Represents the information about a user's operation.
@@ -26,4 +27,7 @@ export interface Operation {
 
   /** When the operation was made. */
   createdAt: string;
+
+  /** Stock base currency. */
+  currency: Currency;
 }

@@ -26,3 +26,28 @@ export const updateUser = createAsyncThunk<
     });
   }
 });
+
+/**
+ * Get the balance of the current user.
+ */
+export const getUserBalance = createAsyncThunk<
+  number,
+  string,
+  AsyncThunkConfig
+>('getUserBalance', async (id, { rejectWithValue }) => {
+  try {
+    const { data } = await smartFinanceApi.get<{ balance: number }>(
+      `/user/${id}/balance`
+    );
+    return data.balance;
+  } catch (error) {
+    const message =
+      error instanceof AxiosError
+        ? error.response?.data.message
+        : 'Ha ocurrido un error.';
+
+    return rejectWithValue({
+      message,
+    });
+  }
+});
