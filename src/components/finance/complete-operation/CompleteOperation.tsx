@@ -30,6 +30,7 @@ interface CompleteOperationProps {
 const initialForm: OperationSchemaType = {
   broker: '',
   quantity: 0,
+  moneyAmount: 0,
 };
 
 export const CompleteOperation: FC<CompleteOperationProps> = ({
@@ -78,7 +79,7 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
   }, []);
 
   const {
-    formState: { broker, quantity },
+    formState: { broker, quantity, moneyAmount },
     handleSubmit,
     onInputChange,
     onBlur,
@@ -109,6 +110,20 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
     }
   }, [createOperationErrorMessage]);
 
+  const onChangeStockQuantity = (id: string, value: string) => {
+    const stocksQuantity = Number(value);
+    onInputChange(id, stocksQuantity);
+    const moneyAmount = stocksQuantity * operationInfo.quantity;
+    onInputChange('moneyAmount', moneyAmount);
+  };
+
+  const onChangeMoneyAmount = (id: string, value: string) => {
+    const moneyAmountParsed = Number(value);
+    onInputChange(id, moneyAmountParsed);
+    const stocksQuantity = moneyAmountParsed / operationInfo.quantity;
+    onInputChange('quantity', stocksQuantity);
+  };
+
   return !areLoadingBrokers ? (
     <>
       <View style={styles.form}>
@@ -122,14 +137,28 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
           />
         </FormControl>
 
-        <FormControl label="Cantidad" fieldError={errors?.quantity}>
+        <FormControl label="Cantidad de acciones" fieldError={errors?.quantity}>
           <Input
             id="quantity"
             type="number-pad"
             value={quantity.toString()}
-            onChange={(id, value) => onInputChange(id, Number(value))}
+            onChange={onChangeStockQuantity}
             onBlur={onBlur}
             hasError={!!errors?.quantity}
+          />
+        </FormControl>
+
+        <FormControl
+          label="Cantidad monetaria"
+          fieldError={errors?.moneyAmount}
+        >
+          <Input
+            id="moneyAmount"
+            type="number-pad"
+            value={moneyAmount.toString()}
+            onChange={onChangeMoneyAmount}
+            onBlur={onBlur}
+            hasError={!!errors?.moneyAmount}
           />
         </FormControl>
       </View>
