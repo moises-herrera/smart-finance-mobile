@@ -5,12 +5,13 @@ import {
   registerUser,
   validateAccessToken,
 } from 'src/redux/auth/authThunks';
-import { updateUser } from 'src/redux/auth/userThunks';
+import { updateUser, getUserBalance } from 'src/redux/auth/userThunks';
 
 const initialState: AuthState = {
   user: null,
   authStatus: 'loading',
   isLoadingUserInfo: false,
+  isLoadingUserBalance: false,
 };
 
 export const authSlice = createSlice({
@@ -89,7 +90,27 @@ export const authSlice = createSlice({
     });
     builder.addCase(updateUser.rejected, (state, { payload }) => {
       state.isLoadingUserInfo = false;
-      state.errorMessage = payload?.message;
+      state.userInfoErrorMessage = payload?.message;
+    });
+
+    builder.addCase(getUserBalance.pending, (state) => {
+      state.isLoadingUserInfo = true;
+      state.isLoadingUserBalance = true;
+      state.userInfoErrorMessage = null;
+      state.userBalanceErrorMessage = null;
+    });
+    builder.addCase(getUserBalance.fulfilled, (state, { payload }) => {
+      state.isLoadingUserInfo = false;
+      state.isLoadingUserBalance = false;
+      if (state.user) state.user.balance = payload;
+      state.userInfoErrorMessage = null;
+      state.userBalanceErrorMessage = null;
+    });
+    builder.addCase(getUserBalance.rejected, (state, { payload }) => {
+      state.isLoadingUserBalance = false;
+      state.isLoadingUserInfo = false;
+      state.userInfoErrorMessage = payload?.message;
+      state.userBalanceErrorMessage = payload?.message;
     });
   },
 });

@@ -18,4 +18,10 @@ export interface AuthState {
 
   /** User info error message. */
   userInfoErrorMessage?: string | null;
+
+  /** If the balance is loading. */
+  isLoadingUserBalance: boolean;
+
+  /** User info error message. */
+  userBalanceErrorMessage?: string | null;
 }

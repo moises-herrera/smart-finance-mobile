@@ -21,6 +21,7 @@ import {
   clearCreateOperationErrorMessage,
   createOperation,
 } from 'src/redux/operation';
+import { getUserBalance } from 'src/redux/auth';
 
 interface CompleteOperationProps {
   operationInfo: OperationInfo;
@@ -37,6 +38,7 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
   closeDialog,
 }) => {
   const dispatch = useAppDispatch();
+  const user = useAppSelector(({ auth }) => auth.user);
   const isCreatingOperation = useAppSelector(
     ({ operation: { isCreatingOperation } }) => isCreatingOperation
   );
@@ -97,6 +99,7 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
         displayToast({ type: 'success', message: 'Operación completada' })
       );
       closeDialog();
+      dispatch(getUserBalance(user?._id as string));
     });
   };
 
@@ -127,7 +130,9 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
             id="quantity"
             type="number-pad"
             value={quantity.toString()}
-            onChange={(id, value) => onInputChange(id, Number(value))}
+            onChange={(id, value) =>
+              onInputChange(id, !isNaN(Number(value)) ? Number(value) : 0)
+            }
             onBlur={onBlur}
             hasError={!!errors?.quantity}
           />

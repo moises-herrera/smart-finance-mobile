@@ -1,4 +1,4 @@
-import { User } from './user.interface';
+import { CreateUserInfo } from './create-user-info.interface';
 
 /**
  * The data to update a user.
@@ -8,5 +8,5 @@ export interface UpdateUserData {
   id: string;
 
   /** User data to update. */
-  userData: Partial<User>;
+  userData: Partial<CreateUserInfo>;
 }

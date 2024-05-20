@@ -1,3 +1,5 @@
+import { Currency } from '../country';
+
 /**
  * Represents a user.
  */
@@ -15,7 +17,7 @@ export interface User {
   country: string;
 
   /** User currency. */
-  currency: string;
+  currency: Currency;
 
   /** User balance. */
   balance: number;
