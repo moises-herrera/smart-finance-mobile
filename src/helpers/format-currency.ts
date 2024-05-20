@@ -5,8 +5,9 @@
  * @returns The formatted currency.
  */
 export const formatCurrency = (value: number, currencyCode: string): string => {
-  return value.toLocaleString('es-CO', {
+  return value.toLocaleString('en-US', {
     style: 'currency',
     currency: currencyCode,
+    maximumFractionDigits: 2,
   });
 };
