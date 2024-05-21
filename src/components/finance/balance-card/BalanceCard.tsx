@@ -17,14 +17,14 @@ export const BalanceCard: FC<BalanceCardProps> = ({
   isLoadingBalance = false,
   currency,
 }) => {
-  const balanceFormatted = formatCurrency(balance, currency.code);
-  const balaceLabel = !isLoadingBalance ? balanceFormatted : 'Cargando..';
+  const balanceFormatted = formatCurrency(balance, currency?.code || 'COP');
+  const balanceLabel = !isLoadingBalance ? balanceFormatted : 'Cargando...';
 
   return (
     <View style={styles.card}>
       <View>
         <Text style={styles.cardText}>Saldo</Text>
-        <Text style={styles.balance}>{balaceLabel}</Text>
+        <Text style={styles.balance}>{balanceLabel}</Text>
       </View>
       <Text
         style={[
@@ -33,6 +33,7 @@ export const BalanceCard: FC<BalanceCardProps> = ({
             textAlign: 'right',
           },
         ]}
+        numberOfLines={1}
       >
         {name}
       </Text>

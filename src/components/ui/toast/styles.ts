@@ -1,4 +1,4 @@
-import { StatusBar, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { ToastStyles } from 'src/interfaces';
 import { appTheme } from 'src/theme';
 

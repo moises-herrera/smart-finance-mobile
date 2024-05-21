@@ -1,4 +1,4 @@
-import { AcquiredStock, Stock } from 'src/interfaces';
+import { AcquiredStock, StockInfoItem } from 'src/interfaces';
 
 /**
  * Parse the acquired stocks to a list of stocks.
@@ -8,10 +8,11 @@ import { AcquiredStock, Stock } from 'src/interfaces';
  */
 export const parseAcquiredStocks = (
   acquiredStocks: AcquiredStock[]
-): Stock[] => {
+): StockInfoItem[] => {
   return acquiredStocks.map(({ stock, totalQuantity, currency }) => ({
     ...stock,
-    price: totalQuantity,
+    quantity: totalQuantity,
+    amount: stock.price * totalQuantity,
     currency,
   }));
 };

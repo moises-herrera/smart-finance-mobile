@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { FlatList, Text, View, Pressable } from 'react-native';
 import { Divider } from 'src/components/ui';
-import { Stock } from 'src/interfaces';
+import { StockInfoItem } from 'src/interfaces';
 import { globalStyles } from 'src/styles';
 import { StockListItem } from 'src/components/finance/stock-list-item';
 import { StockDialog } from 'src/components/finance/stock-dialog';
@@ -10,7 +10,7 @@ import { OperationInfo } from 'src/interfaces';
 
 interface StocksListProps {
   title: string;
-  stocks: Stock[];
+  stocks: StockInfoItem[];
   isBuy?: boolean;
 }
 
@@ -22,13 +22,13 @@ export const StocksList: FC<StocksListProps> = ({
   const [operationInfo, setOperationInfo] = useState<OperationInfo>();
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
-  const onStockPress = (stock: Stock): void => {
+  const onStockPress = (stock: StockInfoItem): void => {
     setIsDialogOpen(true);
     const operationInfo: OperationInfo = {
       stockId: stock._id,
       label: stock.label,
       symbol: stock.symbol,
-      quantity: stock.price,
+      price: stock.amount,
       isBuy,
       currency: stock.conversionCurrency || stock.currency,
     };

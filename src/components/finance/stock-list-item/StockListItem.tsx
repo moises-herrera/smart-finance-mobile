@@ -1,34 +1,46 @@
 import { FC } from 'react';
 import { Text, View } from 'react-native';
 import { styles } from './styles';
-import { Stock } from 'src/interfaces';
+import { StockInfoItem } from 'src/interfaces';
 import { globalStyles } from 'src/styles';
 import { formatCurrency } from 'src/helpers';
 
-interface StockListItemProps extends Stock {}
+interface StockListItemProps extends StockInfoItem {}
 
 export const StockListItem: FC<StockListItemProps> = ({
   label,
   symbol,
-  price,
+  quantity,
+  amount,
   currency,
   conversionCurrency,
 }) => {
   const currencyReference = conversionCurrency || currency;
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={[globalStyles.subTitle, { width: '80%' }]}>{label}</Text>
+      <View style={{ width: '45%' }}>
+        <Text style={[globalStyles.subTitle]} numberOfLines={3}>
+          {label}
+        </Text>
         <Text>{symbol}</Text>
       </View>
-      <View>
+      <View style={{ width: 'auto' }}>
+        {quantity && (
+          <Text
+            style={[
+              globalStyles.subTitle,
+              { fontSize: 14, textAlign: 'right' },
+            ]}
+          >
+            {`x${quantity.toLocaleString('en-US', {
+              maximumSignificantDigits: 5,
+            })}`}
+          </Text>
+        )}
         <Text
           style={[globalStyles.subTitle, { fontSize: 14, textAlign: 'right' }]}
         >
-          {`${currencyReference.code} ${formatCurrency(
-            Number(price.toFixed(2)),
-            currencyReference.code
-          )}`}
+          {formatCurrency(amount, currencyReference.code)}
         </Text>
       </View>
     </View>

@@ -5,10 +5,8 @@ import { z } from 'zod';
  */
 export const OperationSchema = z.object({
   broker: z.string().min(1, 'El broker es requerido'),
-  quantity: z.preprocess(
-    (value) => Number(value),
-    z.number().min(1, 'La cantidad es requerida')
-  ),
+  quantity: z.string().min(1, 'La cantidad es requerida'),
+  moneyAmount: z.string(),
 });
 
 /**

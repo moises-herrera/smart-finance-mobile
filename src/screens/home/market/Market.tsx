@@ -13,6 +13,10 @@ export const Market = () => {
   const areLoadingStocks = useAppSelector(
     ({ stock: { areLoadingStocks } }) => areLoadingStocks
   );
+  const stockItems = availableStocks.map((stock) => ({
+    ...stock,
+    amount: stock.price,
+  }));
 
   useFocusEffect(
     useCallback(() => {
@@ -23,7 +27,7 @@ export const Market = () => {
   return (
     <View style={styles.container}>
       {!areLoadingStocks ? (
-        <StocksList title="Acciones" stocks={availableStocks} />
+        <StocksList title="Acciones" stocks={stockItems} />
       ) : (
         <Loading />
       )}

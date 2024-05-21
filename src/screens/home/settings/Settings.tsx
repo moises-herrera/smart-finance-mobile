@@ -196,7 +196,7 @@ export const Settings = () => {
           <Input
             id="balance"
             type="number-pad"
-            value={balance.toString()}
+            value={balance.toFixed(2)}
             onChange={(id, value) => onInputChange(id, Number(value))}
             onBlur={onBlur}
             hasError={!!errors?.balance}

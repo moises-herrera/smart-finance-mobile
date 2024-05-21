@@ -11,7 +11,7 @@ interface OperationInfoProps {
 }
 
 export const StartOperation: FC<OperationInfoProps> = ({
-  operationInfo: { label, symbol, quantity, isBuy, currency },
+  operationInfo: { label, symbol, price, isBuy, currency },
   onStartOperation,
 }) => {
   const buttonLabel = isBuy ? 'Comprar' : 'Vender';
@@ -24,9 +24,8 @@ export const StartOperation: FC<OperationInfoProps> = ({
       </View>
       <View style={styles.amountContainer}>
         <Text style={styles.stockAmount}>
-          {formatCurrency(quantity, currency.code)}
+          {formatCurrency(price, currency.code)}
         </Text>
-        <Text style={styles.currencyText}>{currency.code}</Text>
       </View>
 
       <View

@@ -63,12 +63,15 @@ export const OperationsList: FC<OperationsListProps> = ({
         <FlatList
           data={operationsSelectedList}
           keyExtractor={({ _id }) => _id}
-          renderItem={({ item: { quantity, stock, createdAt, currency } }) => (
+          renderItem={({
+            item: { quantity, moneyAmount, stock, currency, createdAt },
+          }) => (
             <>
               <StockListItem
                 {...{
                   ...stock,
-                  price: quantity,
+                  quantity,
+                  amount: moneyAmount,
                   currency,
                 }}
               />

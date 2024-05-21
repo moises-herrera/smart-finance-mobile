@@ -21,7 +21,7 @@ import {
   clearCreateOperationErrorMessage,
   createOperation,
 } from 'src/redux/operation';
-import { getUserBalance } from 'src/redux/auth';
+import { validateNumberInput } from 'src/helpers';
 
 interface CompleteOperationProps {
   operationInfo: OperationInfo;
@@ -30,7 +30,8 @@ interface CompleteOperationProps {
 
 const initialForm: OperationSchemaType = {
   broker: '',
-  quantity: 0,
+  quantity: '',
+  moneyAmount: '',
 };
 
 export const CompleteOperation: FC<CompleteOperationProps> = ({
@@ -80,26 +81,30 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
   }, []);
 
   const {
-    formState: { broker, quantity },
+    formState: { broker, quantity, moneyAmount },
     handleSubmit,
     onInputChange,
     onBlur,
+    onSetForm,
     errors,
   } = useForm<OperationSchemaType>(initialForm, OperationSchema);
 
   const onComplete: FormSubmitHandler<OperationSchemaType> = (data) => {
+    const quantity = Number(data.quantity);
+
+    if (quantity <= 0) {
+      return;
+    }
+
     Keyboard.dismiss();
     const operationData: CreateOperation = {
       stock: operationInfo.stockId,
       type: operationInfo.isBuy ? OperationType.Purchase : OperationType.Sale,
       ...data,
+      quantity,
     };
     dispatch(createOperation(operationData)).then(() => {
-      dispatch(
-        displayToast({ type: 'success', message: 'Operación completada' })
-      );
       closeDialog();
-      dispatch(getUserBalance(user?._id as string));
     });
   };
 
@@ -111,6 +116,32 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
       dispatch(clearCreateOperationErrorMessage());
     }
   }, [createOperationErrorMessage]);
+
+  const onChangeStockQuantity = (_id: string, value: string): void => {
+    const cleanValue = validateNumberInput(value);
+    const stocksQuantity = Number(cleanValue);
+    const moneyAmount = Number(
+      Number(stocksQuantity * operationInfo.price).toFixed(2)
+    );
+    onSetForm({
+      broker,
+      quantity: cleanValue,
+      moneyAmount: moneyAmount.toString(),
+    });
+  };
+
+  const onChangeMoneyAmount = (_id: string, value: string): void => {
+    const cleanValue = validateNumberInput(value);
+    const moneyAmountParsed = Number(Number(cleanValue).toFixed(2));
+    const stocksQuantity = Number(
+      Number(moneyAmountParsed / operationInfo.price).toFixed(4)
+    );
+    onSetForm({
+      broker,
+      quantity: stocksQuantity.toString(),
+      moneyAmount: moneyAmountParsed.toString(),
+    });
+  };
 
   return !areLoadingBrokers ? (
     <>
@@ -125,16 +156,28 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
           />
         </FormControl>
 
-        <FormControl label="Cantidad" fieldError={errors?.quantity}>
+        <FormControl label="Cantidad de acciones" fieldError={errors?.quantity}>
           <Input
             id="quantity"
             type="number-pad"
             value={quantity.toString()}
-            onChange={(id, value) =>
-              onInputChange(id, !isNaN(Number(value)) ? Number(value) : 0)
-            }
+            onChange={onChangeStockQuantity}
             onBlur={onBlur}
             hasError={!!errors?.quantity}
+          />
+        </FormControl>
+
+        <FormControl
+          label="Cantidad monetaria"
+          fieldError={errors?.moneyAmount}
+        >
+          <Input
+            id="moneyAmount"
+            type="number-pad"
+            value={moneyAmount.toString()}
+            onChange={onChangeMoneyAmount}
+            onBlur={onBlur}
+            hasError={!!errors?.moneyAmount}
           />
         </FormControl>
       </View>
