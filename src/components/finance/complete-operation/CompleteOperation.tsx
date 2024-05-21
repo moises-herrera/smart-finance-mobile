@@ -21,6 +21,7 @@ import {
   clearCreateOperationErrorMessage,
   createOperation,
 } from 'src/redux/operation';
+import { validateNumberInput } from 'src/helpers';
 
 interface CompleteOperationProps {
   operationInfo: OperationInfo;
@@ -29,8 +30,8 @@ interface CompleteOperationProps {
 
 const initialForm: OperationSchemaType = {
   broker: '',
-  quantity: 0,
-  moneyAmount: 0,
+  quantity: '',
+  moneyAmount: '',
 };
 
 export const CompleteOperation: FC<CompleteOperationProps> = ({
@@ -89,11 +90,24 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
   } = useForm<OperationSchemaType>(initialForm, OperationSchema);
 
   const onComplete: FormSubmitHandler<OperationSchemaType> = (data) => {
+    const quantity = Number(data.quantity);
+
+    if (quantity <= 0) {
+      dispatch(
+        displayToast({
+          type: 'error',
+          message: 'La cantidad de acciones debe ser mayor a 0',
+        })
+      );
+      return;
+    }
+
     Keyboard.dismiss();
     const operationData: CreateOperation = {
       stock: operationInfo.stockId,
       type: operationInfo.isBuy ? OperationType.Purchase : OperationType.Sale,
       ...data,
+      quantity,
     };
     dispatch(createOperation(operationData)).then(() => {
       closeDialog();
@@ -109,29 +123,29 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
     }
   }, [createOperationErrorMessage]);
 
-  const onChangeStockQuantity = (_id: string, value: string) => {
-    const cleanValue = value.replaceAll(',', '');
-    const stocksQuantity = Number(Number(cleanValue).toFixed(6));
+  const onChangeStockQuantity = (_id: string, value: string): void => {
+    const cleanValue = validateNumberInput(value);
+    const stocksQuantity = Number(cleanValue);
     const moneyAmount = Number(
       Number(stocksQuantity * operationInfo.quantity).toFixed(2)
     );
     onSetForm({
       broker,
-      quantity: stocksQuantity,
-      moneyAmount,
+      quantity: cleanValue,
+      moneyAmount: moneyAmount.toString(),
     });
   };
 
-  const onChangeMoneyAmount = (_id: string, value: string) => {
-    const cleanValue = value.replaceAll(',', '');
+  const onChangeMoneyAmount = (_id: string, value: string): void => {
+    const cleanValue = validateNumberInput(value);
     const moneyAmountParsed = Number(Number(cleanValue).toFixed(2));
     const stocksQuantity = Number(
-      Number(moneyAmountParsed / operationInfo.quantity).toFixed(6)
+      Number(moneyAmountParsed / operationInfo.quantity).toFixed(4)
     );
     onSetForm({
       broker,
-      quantity: stocksQuantity,
-      moneyAmount: moneyAmountParsed,
+      quantity: stocksQuantity.toString(),
+      moneyAmount: moneyAmountParsed.toString(),
     });
   };
 
