@@ -121,7 +121,7 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
     const cleanValue = validateNumberInput(value);
     const stocksQuantity = Number(cleanValue);
     const moneyAmount = Number(
-      Number(stocksQuantity * operationInfo.quantity).toFixed(2)
+      Number(stocksQuantity * operationInfo.price).toFixed(2)
     );
     onSetForm({
       broker,
@@ -134,7 +134,7 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
     const cleanValue = validateNumberInput(value);
     const moneyAmountParsed = Number(Number(cleanValue).toFixed(2));
     const stocksQuantity = Number(
-      Number(moneyAmountParsed / operationInfo.quantity).toFixed(4)
+      Number(moneyAmountParsed / operationInfo.price).toFixed(4)
     );
     onSetForm({
       broker,

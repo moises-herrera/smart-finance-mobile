@@ -13,8 +13,8 @@ export interface OperationInfo {
   /** Stock symbol. */
   symbol: string;
 
-  /** Operation amount. */
-  quantity: number;
+  /** Stock price for the operation. */
+  price: number;
 
   /** Whether the operation is a buy. */
   isBuy: boolean;

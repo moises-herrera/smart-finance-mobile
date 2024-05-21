@@ -4,6 +4,9 @@ import { Currency } from '..';
  * Represents the information of a stock item displayed in the list.
  */
 export interface StockInfoItem {
+  /** Stock's id. */
+  _id: string;
+
   /** Stock's label. */
   label: string;
 
