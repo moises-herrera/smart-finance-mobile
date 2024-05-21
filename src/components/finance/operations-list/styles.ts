@@ -18,5 +18,6 @@ export const styles = StyleSheet.create({
     fontSize: 12,
     color: appTheme.colors.darkGray,
     textAlign: 'right',
+    paddingRight: 10,
   },
 });
