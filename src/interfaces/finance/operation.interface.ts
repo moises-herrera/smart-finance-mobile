@@ -10,8 +10,11 @@ export interface Operation {
   /** Operation id. */
   _id: string;
 
-  /** Operation quantity. */
+  /** Quantity of the stock acquired in the operation. */
   quantity: number;
+
+  /** Amount of money used in the operation. */
+  moneyAmount: number;
 
   /** Operation type. */
   type: OperationType;
