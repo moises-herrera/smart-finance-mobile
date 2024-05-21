@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-around',
     padding: 12,
-    gap: 8,
+    gap: 12,
   },
   cardText: {
     fontFamily: 'Inter-Light',

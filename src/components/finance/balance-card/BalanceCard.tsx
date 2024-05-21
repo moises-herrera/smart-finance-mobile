@@ -33,6 +33,7 @@ export const BalanceCard: FC<BalanceCardProps> = ({
             textAlign: 'right',
           },
         ]}
+        numberOfLines={1}
       >
         {name}
       </Text>
