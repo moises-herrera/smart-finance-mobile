@@ -93,12 +93,6 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
     const quantity = Number(data.quantity);
 
     if (quantity <= 0) {
-      dispatch(
-        displayToast({
-          type: 'error',
-          message: 'La cantidad de acciones debe ser mayor a 0',
-        })
-      );
       return;
     }
 
