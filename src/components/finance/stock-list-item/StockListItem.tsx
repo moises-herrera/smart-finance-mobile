@@ -1,16 +1,17 @@
 import { FC } from 'react';
 import { Text, View } from 'react-native';
 import { styles } from './styles';
-import { Stock } from 'src/interfaces';
+import { StockInfoItem } from 'src/interfaces';
 import { globalStyles } from 'src/styles';
 import { formatCurrency } from 'src/helpers';
 
-interface StockListItemProps extends Stock {}
+interface StockListItemProps extends StockInfoItem {}
 
 export const StockListItem: FC<StockListItemProps> = ({
   label,
   symbol,
-  price,
+  quantity,
+  amount,
   currency,
   conversionCurrency,
 }) => {
@@ -22,10 +23,22 @@ export const StockListItem: FC<StockListItemProps> = ({
         <Text>{symbol}</Text>
       </View>
       <View>
+        {quantity && (
+          <Text
+            style={[
+              globalStyles.subTitle,
+              { fontSize: 14, textAlign: 'right' },
+            ]}
+          >
+            {`x${quantity.toLocaleString('en-US', {
+              maximumSignificantDigits: 5,
+            })}`}
+          </Text>
+        )}
         <Text
           style={[globalStyles.subTitle, { fontSize: 14, textAlign: 'right' }]}
         >
-          {formatCurrency(price, currencyReference.code)}
+          {formatCurrency(amount, currencyReference.code)}
         </Text>
       </View>
     </View>

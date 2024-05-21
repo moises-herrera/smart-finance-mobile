@@ -59,7 +59,12 @@ export const StocksList: FC<StocksListProps> = ({
           keyExtractor={({ symbol }) => symbol}
           renderItem={({ item }) => (
             <Pressable onPress={() => onStockPress(item)}>
-              <StockListItem {...item} />
+              <StockListItem
+                {...{
+                  ...item,
+                  amount: item.price,
+                }}
+              />
               <Divider marginVertical={10} />
             </Pressable>
           )}
