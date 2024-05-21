@@ -18,11 +18,13 @@ export const StockListItem: FC<StockListItemProps> = ({
   const currencyReference = conversionCurrency || currency;
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={[globalStyles.subTitle, { width: '80%' }]}>{label}</Text>
+      <View style={{ width: '45%' }}>
+        <Text style={[globalStyles.subTitle]} numberOfLines={3}>
+          {label}
+        </Text>
         <Text>{symbol}</Text>
       </View>
-      <View>
+      <View style={{ width: 'auto' }}>
         {quantity && (
           <Text
             style={[
