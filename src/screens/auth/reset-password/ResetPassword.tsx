@@ -39,7 +39,7 @@ export const ResetPassword: FC<ResetPasswordProps> = ({ navigation }) => {
     try {
       setIsLoading(true);
       await axios.post(
-        `${expoExtraConfig?.API_URL}/user/reset-password`,
+        `${expoExtraConfig?.EXPO_PUBLIC_API_URL}/user/reset-password`,
         {
           password: data.password,
         },

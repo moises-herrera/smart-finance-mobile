@@ -22,14 +22,18 @@ const config: ExpoConfig = {
       foregroundImage: './src/assets/images/adaptive-icon.png',
       backgroundColor: '#ffffff',
     },
+    package: 'com.smartfinance.smartfinance',
   },
   web: {
     favicon: './src/assets/images/favicon.png',
   },
   plugins: ['expo-font'],
   extra: {
-    API_URL: process.env.API_URL,
-  }
+    EXPO_PUBLIC_API_URL: process.env.EXPO_PUBLIC_API_URL,
+    eas: {
+      projectId: 'c0c8634c-2029-4e59-ab7d-21dd61eafbfe',
+    },
+  },
 };
 
 export default config;
