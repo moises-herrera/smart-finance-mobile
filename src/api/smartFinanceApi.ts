@@ -6,7 +6,7 @@ import { getToken } from 'src/helpers';
  * SmartFinance API instance.
  */
 const smartFinanceApi = axios.create({
-  baseURL: expoExtraConfig?.API_URL,
+  baseURL: expoExtraConfig?.EXPO_PUBLIC_API_URL,
 });
 
 smartFinanceApi.interceptors.request.use(async (config) => {
