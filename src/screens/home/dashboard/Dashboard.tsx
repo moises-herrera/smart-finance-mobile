@@ -7,7 +7,7 @@ import { clearErrorMessage, getAcquiredStocks } from 'src/redux/acquired-stock';
 import { displayToast } from 'src/redux/ui';
 import { parseAcquiredStocks } from 'src/helpers';
 import { useFocusEffect } from '@react-navigation/native';
-import { Currency, User } from 'src/interfaces';
+import { User } from 'src/interfaces';
 
 export const Dashboard = () => {
   const dispatch = useAppDispatch();

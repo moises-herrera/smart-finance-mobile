@@ -3,7 +3,10 @@ import { Text, View } from 'react-native';
 import { styles } from './styles';
 import { StockInfoItem } from 'src/interfaces';
 import { globalStyles } from 'src/styles';
-import { formatCurrency } from 'src/helpers';
+import {
+  formatCurrency,
+  formatWithMaximumSignificantDigits,
+} from 'src/helpers';
 
 interface StockListItemProps extends StockInfoItem {}
 
@@ -16,6 +19,11 @@ export const StockListItem: FC<StockListItemProps> = ({
   conversionCurrency,
 }) => {
   const currencyReference = conversionCurrency || currency;
+  const quantityFormatted = formatWithMaximumSignificantDigits(
+    quantity ?? 0,
+    5
+  );
+
   return (
     <View style={styles.container}>
       <View style={{ width: '45%' }}>
@@ -32,9 +40,7 @@ export const StockListItem: FC<StockListItemProps> = ({
               { fontSize: 14, textAlign: 'right' },
             ]}
           >
-            {`x${quantity.toLocaleString('en-US', {
-              maximumSignificantDigits: 5,
-            })}`}
+            {`x${quantityFormatted}`}
           </Text>
         )}
         <Text
