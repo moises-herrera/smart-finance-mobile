@@ -7,6 +7,8 @@ import { StockListItem } from 'src/components/finance/stock-list-item';
 import { StockDialog } from 'src/components/finance/stock-dialog';
 import { styles } from './styles';
 import { OperationInfo } from 'src/interfaces';
+import { useAppDispatch } from 'src/hooks';
+import { getAcquiredStocks } from 'src/redux/acquired-stock';
 
 interface StocksListProps {
   title: string;
@@ -19,6 +21,7 @@ export const StocksList: FC<StocksListProps> = ({
   stocks,
   isBuy = true,
 }) => {
+  const dispatch = useAppDispatch();
   const [operationInfo, setOperationInfo] = useState<OperationInfo>();
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
@@ -37,6 +40,7 @@ export const StocksList: FC<StocksListProps> = ({
 
   const onCloseDialog = () => {
     setIsDialogOpen(false);
+    dispatch(getAcquiredStocks());
   };
 
   return (

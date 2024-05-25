@@ -5,9 +5,7 @@
  * @returns The formatted currency.
  */
 export const formatCurrency = (value: number, currencyCode: string): string => {
-  return value.toLocaleString('en-US', {
-    style: 'currency',
-    currency: currencyCode,
-    maximumFractionDigits: 2,
-  });
+  return `${currencyCode} ${value
+    .toFixed(2)
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}`;
 };
