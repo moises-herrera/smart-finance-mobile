@@ -49,13 +49,10 @@ export const Settings = () => {
     setCountryIdSelected,
   } = useGetCountries(user?.country as string);
 
-  const {
-    currency: { _id: currencyId },
-    ...userFields
-  } = user as User;
+  const { currency: userCurrency, ...userFields } = user ?? ({} as User);
   const userFormData = {
     ...userFields,
-    currency: currencyId,
+    currency: userCurrency?._id as string,
   };
   const {
     formState: { fullName, email, country, currency, balance, password },

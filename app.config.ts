@@ -25,7 +25,7 @@ const config: ExpoConfig = {
     package: 'com.smartfinance.smartfinance',
   },
   web: {
-    favicon: './src/assets/images/favicon.png',
+    favicon: './src/assets/images/chart.svg',
   },
   plugins: ['expo-font'],
   extra: {

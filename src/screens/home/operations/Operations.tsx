@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { Loading, OperationsList } from 'src/components';
 import { styles } from './styles';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/hooks';
 import { getUserOperations, clearErrorMessage } from 'src/redux/operation';
 import { displayToast } from 'src/redux/ui';
@@ -17,9 +17,11 @@ export const Operations = () => {
     ({ operation: { errorMessage } }) => errorMessage
   );
 
-  useEffect(() => {
-    dispatch(getUserOperations());
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(getUserOperations());
+    }, [])
+  );
 
   useFocusEffect(
     useCallback(() => {
