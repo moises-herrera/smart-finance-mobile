@@ -46,10 +46,10 @@ export const Dashboard = () => {
   return (
     <View style={styles.container}>
       <BalanceCard
-        balance={user.balance ?? 0}
+        balance={user?.balance ?? 0}
         name={user?.fullName}
         isLoadingBalance={isLoadingUserBalance}
-        currency={user.currency}
+        currency={user?.currency}
       />
       {!isLoading ? (
         <StocksList
