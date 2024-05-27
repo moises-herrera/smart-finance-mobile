@@ -8,3 +8,4 @@ export * from './dialog';
 export * from './loading';
 export * from './toast';
 export * from './toast-list';
+export * from './password-input';

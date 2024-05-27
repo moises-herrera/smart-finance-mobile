@@ -1,5 +1,5 @@
 import { View, Text, ScrollView } from 'react-native';
-import { FC, useCallback, useEffect } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { globalStyles } from 'src/styles';
 import {
   Button,
@@ -7,6 +7,7 @@ import {
   FormControl,
   Input,
   Loading,
+  PasswordInput,
   Select,
 } from 'src/components';
 import { appTheme } from 'src/theme';
@@ -70,6 +71,8 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
     handleSubmit,
     errors,
   } = useForm<RegisterSchemaType>(initialForm, RegisterSchema);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
+    useState<boolean>(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -162,12 +165,12 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
         </FormControl>
 
         <FormControl label="Contraseña" fieldError={errors?.password}>
-          <Input
+          <PasswordInput
             id="password"
             value={password}
             onChange={onInputChange}
             onBlur={onBlur}
-            secureTextEntry={true}
+            onChangeVisibilityEntry={setIsConfirmPasswordVisible}
             hasError={!!errors?.password}
           />
         </FormControl>
@@ -181,7 +184,7 @@ export const Register: FC<RegisterProps> = ({ navigation }) => {
             value={confirmPassword}
             onChange={onInputChange}
             onBlur={onBlur}
-            secureTextEntry={true}
+            secureTextEntry={!isConfirmPasswordVisible}
             hasError={!!errors?.confirmPassword}
           />
         </FormControl>
