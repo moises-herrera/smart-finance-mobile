@@ -38,7 +38,7 @@
     "zod": "^3.23.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.5",
+    "@babel/core": "^7.24.6",
     "@types/react": "~18.2.79",
     "husky": "^9.0.11",
     "rimraf": "^5.0.7",
