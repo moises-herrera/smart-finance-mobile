@@ -1,7 +1,14 @@
 import { ScrollView, Text, View } from 'react-native';
 import { styles } from './styles';
 import { globalStyles } from 'src/styles';
-import { Button, FormControl, Input, Loading, Select } from 'src/components';
+import {
+  Button,
+  FormControl,
+  Input,
+  Loading,
+  PasswordInput,
+  Select,
+} from 'src/components';
 import {
   SettingsSchema,
   SettingsSchemaType,
@@ -205,12 +212,11 @@ export const Settings = () => {
           fieldError={errors?.password}
           style={styles.formControl}
         >
-          <Input
+          <PasswordInput
             id="password"
             value={password}
             onChange={onInputChange}
             onBlur={onBlur}
-            secureTextEntry={true}
             hasError={!!errors?.password}
           />
         </FormControl>

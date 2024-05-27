@@ -1,7 +1,13 @@
 import { View, Text, ScrollView } from 'react-native';
 import { FC, useEffect } from 'react';
 import { globalStyles } from 'src/styles';
-import { Button, Divider, FormControl, Input } from 'src/components';
+import {
+  Button,
+  Divider,
+  FormControl,
+  Input,
+  PasswordInput,
+} from 'src/components';
 import { appTheme } from 'src/theme';
 import { styles } from 'src/screens/auth/styles';
 import { useAppDispatch, useAppSelector, useForm } from 'src/hooks';
@@ -72,12 +78,11 @@ export const Login: FC<LoginProps> = ({ navigation }) => {
         </FormControl>
 
         <FormControl label="Contraseña" fieldError={errors?.password}>
-          <Input
+          <PasswordInput
             id="password"
             value={password}
             onChange={onInputChange}
             onBlur={onBlur}
-            secureTextEntry={true}
             hasError={!!errors?.password}
           />
         </FormControl>
