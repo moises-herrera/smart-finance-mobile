@@ -2,7 +2,7 @@ import 'ts-node/register';
 import { ExpoConfig } from 'expo/config';
 
 const config: ExpoConfig = {
-  name: 'smart-finance-frontend',
+  name: 'Smart Finance',
   slug: 'smart-finance-frontend',
   version: '1.0.0',
   orientation: 'portrait',
