@@ -9,8 +9,8 @@ const config: ExpoConfig = {
   icon: './src/assets/images/icon.png',
   userInterfaceStyle: 'light',
   splash: {
-    image: './src/assets/images/splash.png',
-    resizeMode: 'contain',
+    image: './src/assets/images/icon.png',
+    resizeMode: undefined,
     backgroundColor: '#ffffff',
   },
   assetBundlePatterns: ['**/*'],
@@ -19,7 +19,7 @@ const config: ExpoConfig = {
   },
   android: {
     adaptiveIcon: {
-      foregroundImage: './src/assets/images/adaptive-icon.png',
+      foregroundImage: './src/assets/images/icon.png',
       backgroundColor: '#ffffff',
     },
     package: 'com.smartfinance.smartfinance',
