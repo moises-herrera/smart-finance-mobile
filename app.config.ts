@@ -9,7 +9,7 @@ const config: ExpoConfig = {
   icon: './src/assets/images/icon.png',
   userInterfaceStyle: 'light',
   splash: {
-    image: './src/assets/images/icon.png',
+    image: './src/assets/images/splash.png',
     resizeMode: undefined,
     backgroundColor: '#ffffff',
   },
@@ -19,7 +19,7 @@ const config: ExpoConfig = {
   },
   android: {
     adaptiveIcon: {
-      foregroundImage: './src/assets/images/icon.png',
+      foregroundImage: './src/assets/images/adaptive-icon.png',
       backgroundColor: '#ffffff',
     },
     package: 'com.smartfinance.smartfinance',
