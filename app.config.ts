@@ -10,7 +10,7 @@ const config: ExpoConfig = {
   userInterfaceStyle: 'light',
   splash: {
     image: './src/assets/images/splash.png',
-    resizeMode: 'contain',
+    resizeMode: undefined,
     backgroundColor: '#ffffff',
   },
   assetBundlePatterns: ['**/*'],
@@ -25,7 +25,7 @@ const config: ExpoConfig = {
     package: 'com.smartfinance.smartfinance',
   },
   web: {
-    favicon: './src/assets/images/chart.svg',
+    favicon: './src/assets/images/icon.png',
   },
   plugins: ['expo-font'],
   extra: {
