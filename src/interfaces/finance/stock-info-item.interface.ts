@@ -13,6 +13,9 @@ export interface StockInfoItem {
   /** Stock's symbol. */
   symbol: string;
 
+  /** Stock's icon. */
+  icon?: string;
+
   /** The quantity acquired of the stock. */
   quantity?: number;
 

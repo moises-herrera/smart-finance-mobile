@@ -13,6 +13,9 @@ export interface Stock {
   /** Stock's symbol. */
   symbol: string;
 
+  /** Stock's icon. */
+  icon?: string;
+
   /** Stock current price. */
   price: number;
 
