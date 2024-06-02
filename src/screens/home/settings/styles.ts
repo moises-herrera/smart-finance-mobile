@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { globalStyles } from 'src/styles';
 import { appTheme } from 'src/theme';
 
 export const styles = StyleSheet.create({
@@ -18,6 +19,7 @@ export const styles = StyleSheet.create({
     backgroundColor: appTheme.colors.white,
     borderRadius: 6,
     padding: 16,
+    ...globalStyles.boxShadow,
   },
   formControl: { marginBottom: 6 },
 });
