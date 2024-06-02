@@ -189,6 +189,8 @@ export const CompleteOperation: FC<CompleteOperationProps> = ({
       />
     </>
   ) : (
-    <Loading />
+    <View style={{ height: 356 }}>
+      <Loading />
+    </View>
   );
 };
