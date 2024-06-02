@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Text, View } from 'react-native';
+import { DimensionValue, Text, View } from 'react-native';
 import { Button } from 'src/components/ui';
 import { globalStyles } from 'src/styles';
 import { appTheme } from 'src/theme';
@@ -9,11 +9,13 @@ import { styles } from './styles';
 interface EmptyStockListProps {
   message: string;
   buttonLabel: string;
+  containerHeight?: DimensionValue;
 }
 
 export const EmptyStockList: FC<EmptyStockListProps> = ({
   message,
   buttonLabel,
+  containerHeight,
 }) => {
   const navigation = useNavigation();
 
@@ -24,7 +26,14 @@ export const EmptyStockList: FC<EmptyStockListProps> = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          height: containerHeight ?? '74%',
+        },
+      ]}
+    >
       <Text
         style={[
           globalStyles.textBase,
