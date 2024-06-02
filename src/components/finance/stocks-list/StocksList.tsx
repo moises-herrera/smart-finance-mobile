@@ -31,6 +31,7 @@ export const StocksList: FC<StocksListProps> = ({
       stockId: stock._id,
       label: stock.label,
       symbol: stock.symbol,
+      icon: stock.icon,
       price: stock.amount,
       isBuy,
       currency: stock.conversionCurrency || stock.currency,

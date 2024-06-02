@@ -13,6 +13,9 @@ export interface OperationInfo {
   /** Stock symbol. */
   symbol: string;
 
+  /** Stock icon. */
+  icon?: string;
+
   /** Stock price for the operation. */
   price: number;
 

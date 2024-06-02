@@ -30,4 +30,14 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     color: appTheme.colors.darkGray,
   },
+  iconContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 80,
+    height: 80,
+    borderRadius: 100,
+    overflow: 'hidden',
+    marginBottom: 10,
+  },
 });
