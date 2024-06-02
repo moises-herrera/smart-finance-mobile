@@ -14,3 +14,13 @@ npm install
 ```
 npm start
 ```
+
+Nota: Para probar la aplicación con [Expo Go](https://expo.dev/go) presionar la tecla `s` en la terminal.
+
+## Compilar la aplicación
+
+- Configurar [EAS Build](https://docs.expo.dev/build/setup/)
+- Generar instalador APK para Android.
+```
+eas build -p android --profile development
+```
