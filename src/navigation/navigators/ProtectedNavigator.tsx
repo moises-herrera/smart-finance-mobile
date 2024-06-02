@@ -1,5 +1,5 @@
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { TabParamList } from 'src/interfaces';
+import { HomeTabParamList } from 'src/interfaces';
 import { Dashboard, Market, Operations, Settings } from 'src/screens/home';
 import { appTheme } from 'src/theme';
 import { MaterialIcons, FontAwesome6 } from '@expo/vector-icons';
@@ -7,7 +7,7 @@ import { Text, View } from 'react-native';
 import { APP_NAME } from 'src/constants';
 import { globalStyles } from 'src/styles';
 
-const Tab = createMaterialBottomTabNavigator<TabParamList>();
+const Tab = createMaterialBottomTabNavigator<HomeTabParamList>();
 
 export const ProtectedNavigator = () => {
   return (
