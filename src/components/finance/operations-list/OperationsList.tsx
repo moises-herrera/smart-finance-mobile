@@ -7,6 +7,7 @@ import { operationTypes } from 'src/mock';
 import { globalStyles } from 'src/styles';
 import { styles } from './styles';
 import { getDateFormatted } from 'src/helpers';
+import { EmptyStockList } from 'src/components/finance/empty-stock-list';
 
 interface OperationsListProps {
   title: string;
@@ -60,28 +61,37 @@ export const OperationsList: FC<OperationsListProps> = ({
       </View>
 
       <View style={styles.list}>
-        <FlatList
-          data={operationsSelectedList}
-          keyExtractor={({ _id }) => _id}
-          renderItem={({
-            item: { quantity, moneyAmount, stock, currency, createdAt },
-          }) => (
-            <>
-              <StockListItem
-                {...{
-                  ...stock,
-                  quantity,
-                  amount: moneyAmount,
-                  currency,
-                }}
-              />
-              <Text style={styles.dateLabel}>
-                {getDateFormatted(createdAt)}
-              </Text>
-              <Divider marginVertical={10} />
-            </>
-          )}
-        />
+        {operationsSelectedList.length ? (
+          <FlatList
+            data={operationsSelectedList}
+            keyExtractor={({ _id }) => _id}
+            renderItem={({
+              item: { _id, quantity, moneyAmount, stock, currency, createdAt },
+            }) => (
+              <>
+                <StockListItem
+                  {...{
+                    ...stock,
+                    quantity,
+                    amount: moneyAmount,
+                    currency,
+                  }}
+                />
+                <Text style={styles.dateLabel}>
+                  {getDateFormatted(createdAt)}
+                </Text>
+                {operationsSelectedList[operationsSelectedList.length - 1]
+                  ._id !== _id && <Divider marginVertical={10} />}
+              </>
+            )}
+          />
+        ) : (
+          <EmptyStockList
+            message="Aquí se mostrará el historial de operaciones que realices en el mercado"
+            buttonLabel="Ir al mercado"
+            containerHeight="94.5%"
+          />
+        )}
       </View>
     </View>
   );
