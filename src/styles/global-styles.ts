@@ -55,4 +55,12 @@ export const globalStyles = StyleSheet.create({
   errorInput: {
     borderColor: appTheme.colors.error.primary,
   },
+  boxShadow: {
+    shadowColor: appTheme.colors.black,
+    shadowOffset: {
+      width: 8,
+      height: 8,
+    },
+    elevation: 0.8,
+  },
 });

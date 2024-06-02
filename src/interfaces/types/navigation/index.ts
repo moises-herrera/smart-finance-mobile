@@ -1,3 +1,2 @@
-export * from './app-stack-param-list.type';
+export * from './app-navigation.type';
 export * from './auth-stack-param-list.type';
-export * from './tab-param-list.type';

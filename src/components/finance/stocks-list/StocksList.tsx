@@ -9,6 +9,7 @@ import { styles } from './styles';
 import { OperationInfo } from 'src/interfaces';
 import { useAppDispatch } from 'src/hooks';
 import { getAcquiredStocks } from 'src/redux/acquired-stock';
+import { EmptyStockList } from 'src/components/finance/empty-stock-list';
 
 interface StocksListProps {
   title: string;
@@ -59,16 +60,25 @@ export const StocksList: FC<StocksListProps> = ({
       </Text>
 
       <View style={styles.list}>
-        <FlatList
-          data={stocks}
-          keyExtractor={({ symbol }) => symbol}
-          renderItem={({ item }) => (
-            <Pressable onPress={() => onStockPress(item)}>
-              <StockListItem {...item} />
-              <Divider marginVertical={10} />
-            </Pressable>
-          )}
-        />
+        {stocks.length ? (
+          <FlatList
+            data={stocks}
+            keyExtractor={({ symbol }) => symbol}
+            renderItem={({ item }) => (
+              <Pressable onPress={() => onStockPress(item)}>
+                <StockListItem {...item} />
+                {stocks[stocks.length - 1].symbol !== item.symbol && (
+                  <Divider marginVertical={10} />
+                )}
+              </Pressable>
+            )}
+          />
+        ) : (
+          <EmptyStockList
+            message="Aquí se mostrarán las acciones que adquieras en el mercado"
+            buttonLabel="¡Empieza a invertir!"
+          />
+        )}
       </View>
 
       {operationInfo && (

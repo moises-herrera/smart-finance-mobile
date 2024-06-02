@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { globalStyles } from 'src/styles';
 import { appTheme } from 'src/theme';
 
 export const styles = StyleSheet.create({
@@ -12,5 +13,6 @@ export const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: appTheme.colors.white,
     borderRadius: 6,
+    ...globalStyles.boxShadow,
   },
 });
