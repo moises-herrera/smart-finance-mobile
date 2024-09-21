@@ -30,6 +30,7 @@ const config: ExpoConfig = {
   plugins: ['expo-font'],
   extra: {
     EXPO_PUBLIC_API_URL: process.env.EXPO_PUBLIC_API_URL,
+    EXPO_PUBLIC_SOCKET_URL: process.env.EXPO_PUBLIC_SOCKET_URL,
     eas: {
       projectId: 'c0c8634c-2029-4e59-ab7d-21dd61eafbfe',
     },
