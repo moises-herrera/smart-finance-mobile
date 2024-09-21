@@ -1,10 +1,12 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { View } from 'react-native';
 import { Loading, StocksList } from 'src/components';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from 'src/hooks';
 import { getAvailableStocks } from 'src/redux/stock';
 import { useFocusEffect } from '@react-navigation/native';
+import { socket } from 'src/socket/socket';
+import { displayToast } from 'src/redux/ui';
 
 export const Market = () => {
   const dispatch = useAppDispatch();
@@ -23,6 +25,18 @@ export const Market = () => {
       dispatch(getAvailableStocks());
     }, [userCountry])
   );
+
+  useEffect(() => {
+    socket.emit('join-market');
+
+    socket.on('notification-from-server', ({ message }) => {
+      dispatch(displayToast({ message, type: 'success' }));
+    });
+
+    return () => {
+      socket.off('notification-from-server');
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
