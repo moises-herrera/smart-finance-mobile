@@ -1,5 +1,6 @@
 {
   "cli": {
+    "appVersionSource": "remote",
     "version": ">= 9.1.0"
   },
   "build": {
@@ -13,7 +14,8 @@
       "env": {
         "EXPO_PUBLIC_API_URL": "https://smart-finance-backend.onrender.com/api",
         "EXPO_PUBLIC_SOCKET_URL": "https://smart-finance-backend.onrender.com"
-      }
+      },
+      "autoIncrement": true
     },
     "preview": {
       "distribution": "internal"
