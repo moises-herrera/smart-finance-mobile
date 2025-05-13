@@ -43,7 +43,7 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@types/react": "~18.2.79",
-    "husky": "^9.1.4",
+    "husky": "^9.1.6",
     "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
     "typescript": "~5.3.3"
